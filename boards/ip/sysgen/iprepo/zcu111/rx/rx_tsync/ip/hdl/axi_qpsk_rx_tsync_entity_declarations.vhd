@@ -374,6 +374,33 @@ end behavior;
 library xil_defaultlib;
 use xil_defaultlib.conv_pkg.all;
 
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+entity sysgen_relational_4b283eb8ab is
+  port (
+    a : in std_logic_vector((32 - 1) downto 0);
+    b : in std_logic_vector((32 - 1) downto 0);
+    op : out std_logic_vector((1 - 1) downto 0);
+    clk : in std_logic;
+    ce : in std_logic;
+    clr : in std_logic);
+end sysgen_relational_4b283eb8ab;
+architecture behavior of sysgen_relational_4b283eb8ab
+is
+  signal a_1_31: unsigned((32 - 1) downto 0);
+  signal b_1_34: unsigned((32 - 1) downto 0);
+  signal result_12_3_rel: boolean;
+begin
+  a_1_31 <= std_logic_vector_to_unsigned(a);
+  b_1_34 <= std_logic_vector_to_unsigned(b);
+  result_12_3_rel <= a_1_31 = b_1_34;
+  op <= boolean_to_vector(result_12_3_rel);
+end behavior;
+
+library xil_defaultlib;
+use xil_defaultlib.conv_pkg.all;
+
 ---------------------------------------------------------------------
 --
 --  Filename      : xlslice.vhd
@@ -406,33 +433,6 @@ architecture behavior of axi_qpsk_rx_tsync_xlslice is
 begin
     y <= x(new_msb downto new_lsb);
 end  behavior;
-
-library xil_defaultlib;
-use xil_defaultlib.conv_pkg.all;
-
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.numeric_std.all;
-entity sysgen_relational_4b283eb8ab is
-  port (
-    a : in std_logic_vector((32 - 1) downto 0);
-    b : in std_logic_vector((32 - 1) downto 0);
-    op : out std_logic_vector((1 - 1) downto 0);
-    clk : in std_logic;
-    ce : in std_logic;
-    clr : in std_logic);
-end sysgen_relational_4b283eb8ab;
-architecture behavior of sysgen_relational_4b283eb8ab
-is
-  signal a_1_31: unsigned((32 - 1) downto 0);
-  signal b_1_34: unsigned((32 - 1) downto 0);
-  signal result_12_3_rel: boolean;
-begin
-  a_1_31 <= std_logic_vector_to_unsigned(a);
-  b_1_34 <= std_logic_vector_to_unsigned(b);
-  result_12_3_rel <= a_1_31 = b_1_34;
-  op <= boolean_to_vector(result_12_3_rel);
-end behavior;
 
 library xil_defaultlib;
 use xil_defaultlib.conv_pkg.all;
@@ -1913,7 +1913,7 @@ use xil_defaultlib.conv_pkg.all;
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
-entity sysgen_mcode_block_63d5ede9bf is
+entity sysgen_mcode_block_f3a4378c49 is
   port (
     axiwrite : in std_logic_vector((1 - 1) downto 0);
     tlast : in std_logic_vector((1 - 1) downto 0);
@@ -1923,8 +1923,8 @@ entity sysgen_mcode_block_63d5ede9bf is
     clk : in std_logic;
     ce : in std_logic;
     clr : in std_logic);
-end sysgen_mcode_block_63d5ede9bf;
-architecture behavior of sysgen_mcode_block_63d5ede9bf
+end sysgen_mcode_block_f3a4378c49;
+architecture behavior of sysgen_mcode_block_f3a4378c49
 is
   signal axiwrite_1_23: unsigned((1 - 1) downto 0);
   signal tlast_1_33: unsigned((1 - 1) downto 0);
@@ -1936,18 +1936,18 @@ is
   signal rel_14_33: boolean;
   signal rel_14_48: boolean;
   signal bool_14_16: boolean;
-  signal state_join_14_13: unsigned((2 - 1) downto 0);
   signal re_join_14_13: unsigned((1 - 1) downto 0);
+  signal state_join_14_13: unsigned((2 - 1) downto 0);
   signal rel_22_16: boolean;
-  signal state_join_22_13: unsigned((2 - 1) downto 0);
   signal re_join_22_13: unsigned((1 - 1) downto 0);
+  signal state_join_22_13: unsigned((2 - 1) downto 0);
   signal rel_30_16: boolean;
   signal rel_30_33: boolean;
   signal bool_30_16: boolean;
-  signal state_join_30_13: unsigned((2 - 1) downto 0);
   signal re_join_30_13: unsigned((1 - 1) downto 0);
-  signal state_join_11_5: unsigned((2 - 1) downto 0);
+  signal state_join_30_13: unsigned((2 - 1) downto 0);
   signal re_join_11_5: unsigned((1 - 1) downto 0);
+  signal state_join_11_5: unsigned((2 - 1) downto 0);
 begin
   axiwrite_1_23 <= std_logic_vector_to_unsigned(axiwrite);
   tlast_1_33 <= std_logic_vector_to_unsigned(tlast);
@@ -1970,11 +1970,11 @@ begin
   is
   begin
     if bool_14_16 then
-      state_join_14_13 <= std_logic_vector_to_unsigned("01");
       re_join_14_13 <= std_logic_vector_to_unsigned("1");
+      state_join_14_13 <= std_logic_vector_to_unsigned("01");
     else 
-      state_join_14_13 <= state_9_5;
       re_join_14_13 <= std_logic_vector_to_unsigned("0");
+      state_join_14_13 <= state_9_5;
     end if;
   end process proc_if_14_13;
   rel_22_16 <= tlast_1_33 = std_logic_vector_to_unsigned("1");
@@ -1982,11 +1982,11 @@ begin
   is
   begin
     if rel_22_16 then
-      state_join_22_13 <= std_logic_vector_to_unsigned("10");
       re_join_22_13 <= std_logic_vector_to_unsigned("0");
+      state_join_22_13 <= std_logic_vector_to_unsigned("10");
     else 
-      state_join_22_13 <= state_9_5;
       re_join_22_13 <= std_logic_vector_to_unsigned("1");
+      state_join_22_13 <= state_9_5;
     end if;
   end process proc_if_22_13;
   rel_30_16 <= axiwrite_1_23 = std_logic_vector_to_unsigned("0");
@@ -1996,11 +1996,11 @@ begin
   is
   begin
     if bool_30_16 then
+      re_join_30_13 <= std_logic_vector_to_unsigned("0");
       state_join_30_13 <= std_logic_vector_to_unsigned("00");
-      re_join_30_13 <= std_logic_vector_to_unsigned("0");
     else 
-      state_join_30_13 <= state_9_5;
       re_join_30_13 <= std_logic_vector_to_unsigned("0");
+      state_join_30_13 <= state_9_5;
     end if;
   end process proc_if_30_13;
   proc_switch_11_5: process (re_join_14_13, re_join_22_13, re_join_30_13, state_9_5, state_join_14_13, state_join_22_13, state_join_30_13)
@@ -2008,17 +2008,17 @@ begin
   begin
     case state_9_5 is 
       when "00" =>
-        state_join_11_5 <= state_join_14_13;
         re_join_11_5 <= re_join_14_13;
+        state_join_11_5 <= state_join_14_13;
       when "01" =>
-        state_join_11_5 <= state_join_22_13;
         re_join_11_5 <= re_join_22_13;
+        state_join_11_5 <= state_join_22_13;
       when "10" =>
-        state_join_11_5 <= state_join_30_13;
         re_join_11_5 <= re_join_30_13;
+        state_join_11_5 <= state_join_30_13;
       when others =>
-        state_join_11_5 <= std_logic_vector_to_unsigned("00");
         re_join_11_5 <= std_logic_vector_to_unsigned("0");
+        state_join_11_5 <= std_logic_vector_to_unsigned("00");
     end case;
   end process proc_switch_11_5;
   state_9_5_next <= state_join_11_5;

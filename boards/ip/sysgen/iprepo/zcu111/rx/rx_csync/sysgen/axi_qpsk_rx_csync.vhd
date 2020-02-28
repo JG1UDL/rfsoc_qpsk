@@ -8,36 +8,36 @@ entity axi_qpsk_rx_csync_determine_frequency_correction_term is
     mag_sq_fft : in std_logic_vector( 30-1 downto 0 );
     fft_index : in std_logic_vector( 9-1 downto 0 );
     valid : in std_logic_vector( 1-1 downto 0 );
-    clk_6400 : in std_logic;
-    ce_6400 : in std_logic;
-    freq_correction : out std_logic_vector( 19-1 downto 0 );
+    clk_640 : in std_logic;
+    ce_640 : in std_logic;
+    freq_correction : out std_logic_vector( 23-1 downto 0 );
     valid_out : out std_logic_vector( 1-1 downto 0 )
   );
 end axi_qpsk_rx_csync_determine_frequency_correction_term;
 architecture structural of axi_qpsk_rx_csync_determine_frequency_correction_term is 
-  signal rom_data_net : std_logic_vector( 19-1 downto 0 );
-  signal delay1_q_net : std_logic_vector( 1-1 downto 0 );
-  signal delay8_q_net : std_logic_vector( 30-1 downto 0 );
   signal delay4_q_net : std_logic_vector( 9-1 downto 0 );
-  signal delay9_q_net : std_logic_vector( 1-1 downto 0 );
+  signal delay1_q_net : std_logic_vector( 1-1 downto 0 );
   signal ce_net : std_logic;
+  signal capture_max_x_val_index_q_net : std_logic_vector( 9-1 downto 0 );
+  signal register_x_coeff_q_net : std_logic_vector( 9-1 downto 0 );
   signal clk_net : std_logic;
   signal delay6_q_net : std_logic_vector( 1-1 downto 0 );
-  signal capture_max_x_val_index_q_net : std_logic_vector( 9-1 downto 0 );
-  signal relational2_op_net : std_logic_vector( 1-1 downto 0 );
-  signal register_x_coeff_q_net : std_logic_vector( 9-1 downto 0 );
   signal constant5_op_net : std_logic_vector( 9-1 downto 0 );
-  signal logical_y_net : std_logic_vector( 1-1 downto 0 );
-  signal relational3_op_net : std_logic_vector( 1-1 downto 0 );
+  signal rom_data_net : std_logic_vector( 23-1 downto 0 );
+  signal delay8_q_net : std_logic_vector( 30-1 downto 0 );
+  signal delay9_q_net : std_logic_vector( 1-1 downto 0 );
+  signal relational2_op_net : std_logic_vector( 1-1 downto 0 );
   signal register_x_val_q_net : std_logic_vector( 30-1 downto 0 );
+  signal relational3_op_net : std_logic_vector( 1-1 downto 0 );
+  signal logical_y_net : std_logic_vector( 1-1 downto 0 );
 begin
   freq_correction <= rom_data_net;
   valid_out <= delay1_q_net;
   delay8_q_net <= mag_sq_fft;
   delay4_q_net <= fft_index;
   delay9_q_net <= valid;
-  clk_net <= clk_6400;
-  ce_net <= ce_6400;
+  clk_net <= clk_640;
+  ce_net <= ce_640;
   capture_max_x_val_index : entity xil_defaultlib.axi_qpsk_rx_csync_xlregister 
   generic map (
     d_width => 9,
@@ -100,7 +100,7 @@ begin
   rom : entity xil_defaultlib.axi_qpsk_rx_csync_xlsprom 
   generic map (
     c_address_width => 9,
-    c_width => 19,
+    c_width => 23,
     core_name0 => "axi_qpsk_rx_csync_blk_mem_gen_i0",
     latency => 1
   )
@@ -164,32 +164,32 @@ library xil_defaultlib;
 use xil_defaultlib.conv_pkg.all;
 entity axi_qpsk_rx_csync_nco is
   port (
-    freq_correction : in std_logic_vector( 19-1 downto 0 );
+    freq_correction : in std_logic_vector( 23-1 downto 0 );
     en : in std_logic_vector( 1-1 downto 0 );
-    clk_6400 : in std_logic;
-    ce_6400 : in std_logic;
+    clk_640 : in std_logic;
+    ce_640 : in std_logic;
     cos : out std_logic_vector( 16-1 downto 0 );
     sin : out std_logic_vector( 16-1 downto 0 )
   );
 end axi_qpsk_rx_csync_nco;
 architecture structural of axi_qpsk_rx_csync_nco is 
-  signal delay1_q_net : std_logic_vector( 1-1 downto 0 );
+  signal convert4_dout_net : std_logic_vector( 10-1 downto 0 );
   signal sin_rom_data_net : std_logic_vector( 16-1 downto 0 );
-  signal rom_data_net : std_logic_vector( 19-1 downto 0 );
-  signal cos_rom_data_net : std_logic_vector( 16-1 downto 0 );
+  signal delay1_q_net : std_logic_vector( 1-1 downto 0 );
   signal clk_net : std_logic;
+  signal cos_rom_data_net : std_logic_vector( 16-1 downto 0 );
+  signal rom_data_net : std_logic_vector( 23-1 downto 0 );
   signal ce_net : std_logic;
   signal addsub_s_net : std_logic_vector( 18-1 downto 0 );
   signal delay2_q_net : std_logic_vector( 18-1 downto 0 );
   signal cmult_p_net : std_logic_vector( 20-1 downto 0 );
-  signal convert4_dout_net : std_logic_vector( 10-1 downto 0 );
 begin
   cos <= cos_rom_data_net;
   sin <= sin_rom_data_net;
   rom_data_net <= freq_correction;
   delay1_q_net <= en;
-  clk_net <= clk_6400;
-  ce_net <= ce_6400;
+  clk_net <= clk_640;
+  ce_net <= ce_640;
   addsub : entity xil_defaultlib.axi_qpsk_rx_csync_xladdsub 
   generic map (
     a_arith => xlUnsigned,
@@ -225,13 +225,13 @@ begin
   generic map (
     a_arith => xlSigned,
     a_bin_pt => 6,
-    a_width => 19,
+    a_width => 23,
     b_bin_pt => 10,
     c_a_type => 0,
-    c_a_width => 19,
+    c_a_width => 23,
     c_b_type => 1,
     c_b_width => 11,
-    c_output_width => 30,
+    c_output_width => 34,
     core_name0 => "axi_qpsk_rx_csync_mult_gen_v12_0_i0",
     extra_registers => 0,
     multsign => 2,
@@ -330,32 +330,32 @@ entity axi_qpsk_rx_csync_vectoring_cell_2 is
   port (
     x_in : in std_logic_vector( 15-1 downto 0 );
     y_in : in std_logic_vector( 15-1 downto 0 );
-    clk_6400 : in std_logic;
-    ce_6400 : in std_logic;
+    clk_640 : in std_logic;
+    ce_640 : in std_logic;
     x_out : out std_logic_vector( 15-1 downto 0 );
     y_out : out std_logic_vector( 15-1 downto 0 )
   );
 end axi_qpsk_rx_csync_vectoring_cell_2;
 architecture structural of axi_qpsk_rx_csync_vectoring_cell_2 is 
-  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
-  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
-  signal delay5_q_net : std_logic_vector( 15-1 downto 0 );
-  signal ce_net : std_logic;
-  signal clk_net : std_logic;
-  signal shift1_op_net : std_logic_vector( 15-1 downto 0 );
-  signal shift_op_net : std_logic_vector( 15-1 downto 0 );
-  signal inverter_op_net : std_logic_vector( 1-1 downto 0 );
-  signal addsub3_s_net : std_logic_vector( 15-1 downto 0 );
   signal addsub2_s_net : std_logic_vector( 15-1 downto 0 );
-  signal delay6_q_net : std_logic_vector( 15-1 downto 0 );
+  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
   signal logical_y_net : std_logic_vector( 1-1 downto 0 );
+  signal ce_net : std_logic;
+  signal inverter_op_net : std_logic_vector( 1-1 downto 0 );
+  signal delay5_q_net : std_logic_vector( 15-1 downto 0 );
+  signal addsub3_s_net : std_logic_vector( 15-1 downto 0 );
+  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
+  signal shift1_op_net : std_logic_vector( 15-1 downto 0 );
+  signal clk_net : std_logic;
+  signal delay6_q_net : std_logic_vector( 15-1 downto 0 );
+  signal shift_op_net : std_logic_vector( 15-1 downto 0 );
 begin
   x_out <= addsub2_s_net;
   y_out <= addsub3_s_net;
   delay5_q_net <= x_in;
   delay6_q_net <= y_in;
-  clk_net <= clk_6400;
-  ce_net <= ce_6400;
+  clk_net <= clk_640;
+  ce_net <= ce_640;
   addsub2 : entity xil_defaultlib.sysgen_addsub_8e916c5190 
   port map (
     clr => '0',
@@ -441,32 +441,32 @@ entity axi_qpsk_rx_csync_vectoring_cell_3 is
   port (
     x_in : in std_logic_vector( 15-1 downto 0 );
     y_in : in std_logic_vector( 15-1 downto 0 );
-    clk_6400 : in std_logic;
-    ce_6400 : in std_logic;
+    clk_640 : in std_logic;
+    ce_640 : in std_logic;
     x_out : out std_logic_vector( 15-1 downto 0 );
     y_out : out std_logic_vector( 15-1 downto 0 )
   );
 end axi_qpsk_rx_csync_vectoring_cell_3;
 architecture structural of axi_qpsk_rx_csync_vectoring_cell_3 is 
-  signal addsub3_s_net : std_logic_vector( 15-1 downto 0 );
-  signal delay9_q_net : std_logic_vector( 15-1 downto 0 );
-  signal clk_net : std_logic;
-  signal shift1_op_net : std_logic_vector( 15-1 downto 0 );
-  signal logical_y_net : std_logic_vector( 1-1 downto 0 );
-  signal delay8_q_net : std_logic_vector( 15-1 downto 0 );
   signal addsub2_s_net : std_logic_vector( 15-1 downto 0 );
-  signal ce_net : std_logic;
-  signal shift_op_net : std_logic_vector( 15-1 downto 0 );
+  signal addsub3_s_net : std_logic_vector( 15-1 downto 0 );
   signal inverter_op_net : std_logic_vector( 1-1 downto 0 );
-  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
+  signal delay9_q_net : std_logic_vector( 15-1 downto 0 );
+  signal shift1_op_net : std_logic_vector( 15-1 downto 0 );
   signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
+  signal ce_net : std_logic;
+  signal logical_y_net : std_logic_vector( 1-1 downto 0 );
+  signal clk_net : std_logic;
+  signal shift_op_net : std_logic_vector( 15-1 downto 0 );
+  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
+  signal delay8_q_net : std_logic_vector( 15-1 downto 0 );
 begin
   x_out <= addsub2_s_net;
   y_out <= addsub3_s_net;
   delay8_q_net <= x_in;
   delay9_q_net <= y_in;
-  clk_net <= clk_6400;
-  ce_net <= ce_6400;
+  clk_net <= clk_640;
+  ce_net <= ce_640;
   addsub2 : entity xil_defaultlib.sysgen_addsub_8e916c5190 
   port map (
     clr => '0',
@@ -552,32 +552,32 @@ entity axi_qpsk_rx_csync_vectoring_cell_4 is
   port (
     x_in : in std_logic_vector( 15-1 downto 0 );
     y_in : in std_logic_vector( 15-1 downto 0 );
-    clk_6400 : in std_logic;
-    ce_6400 : in std_logic;
+    clk_640 : in std_logic;
+    ce_640 : in std_logic;
     x_out : out std_logic_vector( 15-1 downto 0 );
     y_out : out std_logic_vector( 15-1 downto 0 )
   );
 end axi_qpsk_rx_csync_vectoring_cell_4;
 architecture structural of axi_qpsk_rx_csync_vectoring_cell_4 is 
-  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
-  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
-  signal ce_net : std_logic;
-  signal delay22_q_net : std_logic_vector( 15-1 downto 0 );
-  signal logical_y_net : std_logic_vector( 1-1 downto 0 );
-  signal shift1_op_net : std_logic_vector( 15-1 downto 0 );
-  signal addsub3_s_net : std_logic_vector( 15-1 downto 0 );
   signal addsub2_s_net : std_logic_vector( 15-1 downto 0 );
-  signal shift_op_net : std_logic_vector( 15-1 downto 0 );
-  signal inverter_op_net : std_logic_vector( 1-1 downto 0 );
-  signal clk_net : std_logic;
+  signal delay22_q_net : std_logic_vector( 15-1 downto 0 );
+  signal addsub3_s_net : std_logic_vector( 15-1 downto 0 );
   signal delay10_q_net : std_logic_vector( 15-1 downto 0 );
+  signal logical_y_net : std_logic_vector( 1-1 downto 0 );
+  signal inverter_op_net : std_logic_vector( 1-1 downto 0 );
+  signal shift_op_net : std_logic_vector( 15-1 downto 0 );
+  signal shift1_op_net : std_logic_vector( 15-1 downto 0 );
+  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
+  signal clk_net : std_logic;
+  signal ce_net : std_logic;
+  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
 begin
   x_out <= addsub2_s_net;
   y_out <= addsub3_s_net;
   delay22_q_net <= x_in;
   delay10_q_net <= y_in;
-  clk_net <= clk_6400;
-  ce_net <= ce_6400;
+  clk_net <= clk_640;
+  ce_net <= ce_640;
   addsub2 : entity xil_defaultlib.sysgen_addsub_8e916c5190 
   port map (
     clr => '0',
@@ -663,32 +663,32 @@ entity axi_qpsk_rx_csync_vectoring_cell_5 is
   port (
     x_in : in std_logic_vector( 15-1 downto 0 );
     y_in : in std_logic_vector( 15-1 downto 0 );
-    clk_6400 : in std_logic;
-    ce_6400 : in std_logic;
+    clk_640 : in std_logic;
+    ce_640 : in std_logic;
     x_out : out std_logic_vector( 15-1 downto 0 );
     y_out : out std_logic_vector( 15-1 downto 0 )
   );
 end axi_qpsk_rx_csync_vectoring_cell_5;
 architecture structural of axi_qpsk_rx_csync_vectoring_cell_5 is 
+  signal addsub2_s_net : std_logic_vector( 15-1 downto 0 );
+  signal addsub3_s_net : std_logic_vector( 15-1 downto 0 );
   signal delay12_q_net : std_logic_vector( 15-1 downto 0 );
   signal delay13_q_net : std_logic_vector( 15-1 downto 0 );
+  signal ce_net : std_logic;
   signal clk_net : std_logic;
   signal logical_y_net : std_logic_vector( 1-1 downto 0 );
-  signal addsub3_s_net : std_logic_vector( 15-1 downto 0 );
+  signal shift_op_net : std_logic_vector( 15-1 downto 0 );
+  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
+  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
   signal inverter_op_net : std_logic_vector( 1-1 downto 0 );
   signal shift1_op_net : std_logic_vector( 15-1 downto 0 );
-  signal ce_net : std_logic;
-  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
-  signal shift_op_net : std_logic_vector( 15-1 downto 0 );
-  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
-  signal addsub2_s_net : std_logic_vector( 15-1 downto 0 );
 begin
   x_out <= addsub2_s_net;
   y_out <= addsub3_s_net;
   delay12_q_net <= x_in;
   delay13_q_net <= y_in;
-  clk_net <= clk_6400;
-  ce_net <= ce_6400;
+  clk_net <= clk_640;
+  ce_net <= ce_640;
   addsub2 : entity xil_defaultlib.sysgen_addsub_8e916c5190 
   port map (
     clr => '0',
@@ -774,32 +774,32 @@ entity axi_qpsk_rx_csync_vectoring_cell_6 is
   port (
     x_in : in std_logic_vector( 15-1 downto 0 );
     y_in : in std_logic_vector( 15-1 downto 0 );
-    clk_6400 : in std_logic;
-    ce_6400 : in std_logic;
+    clk_640 : in std_logic;
+    ce_640 : in std_logic;
     x_out : out std_logic_vector( 15-1 downto 0 );
     y_out : out std_logic_vector( 15-1 downto 0 )
   );
 end axi_qpsk_rx_csync_vectoring_cell_6;
 architecture structural of axi_qpsk_rx_csync_vectoring_cell_6 is 
-  signal shift1_op_net : std_logic_vector( 15-1 downto 0 );
-  signal delay16_q_net : std_logic_vector( 15-1 downto 0 );
-  signal logical_y_net : std_logic_vector( 1-1 downto 0 );
-  signal ce_net : std_logic;
-  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
-  signal inverter_op_net : std_logic_vector( 1-1 downto 0 );
-  signal clk_net : std_logic;
-  signal addsub3_s_net : std_logic_vector( 15-1 downto 0 );
-  signal delay15_q_net : std_logic_vector( 15-1 downto 0 );
   signal addsub2_s_net : std_logic_vector( 15-1 downto 0 );
+  signal delay15_q_net : std_logic_vector( 15-1 downto 0 );
+  signal addsub3_s_net : std_logic_vector( 15-1 downto 0 );
   signal slice_y_net : std_logic_vector( 1-1 downto 0 );
+  signal inverter_op_net : std_logic_vector( 1-1 downto 0 );
+  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
+  signal ce_net : std_logic;
+  signal delay16_q_net : std_logic_vector( 15-1 downto 0 );
+  signal shift1_op_net : std_logic_vector( 15-1 downto 0 );
+  signal clk_net : std_logic;
   signal shift_op_net : std_logic_vector( 15-1 downto 0 );
+  signal logical_y_net : std_logic_vector( 1-1 downto 0 );
 begin
   x_out <= addsub2_s_net;
   y_out <= addsub3_s_net;
   delay15_q_net <= x_in;
   delay16_q_net <= y_in;
-  clk_net <= clk_6400;
-  ce_net <= ce_6400;
+  clk_net <= clk_640;
+  ce_net <= ce_640;
   addsub2 : entity xil_defaultlib.sysgen_addsub_8e916c5190 
   port map (
     clr => '0',
@@ -885,27 +885,27 @@ entity axi_qpsk_rx_csync_vectoring_cell_7 is
   port (
     x_in : in std_logic_vector( 15-1 downto 0 );
     y_in : in std_logic_vector( 15-1 downto 0 );
-    clk_6400 : in std_logic;
-    ce_6400 : in std_logic;
+    clk_640 : in std_logic;
+    ce_640 : in std_logic;
     x_out : out std_logic_vector( 15-1 downto 0 )
   );
 end axi_qpsk_rx_csync_vectoring_cell_7;
 architecture structural of axi_qpsk_rx_csync_vectoring_cell_7 is 
-  signal clk_net : std_logic;
   signal slice_y_net : std_logic_vector( 1-1 downto 0 );
+  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
+  signal delay18_q_net : std_logic_vector( 15-1 downto 0 );
+  signal addsub2_s_net : std_logic_vector( 15-1 downto 0 );
+  signal clk_net : std_logic;
   signal ce_net : std_logic;
-  signal logical_y_net : std_logic_vector( 1-1 downto 0 );
   signal delay19_q_net : std_logic_vector( 15-1 downto 0 );
   signal shift1_op_net : std_logic_vector( 15-1 downto 0 );
-  signal addsub2_s_net : std_logic_vector( 15-1 downto 0 );
-  signal delay18_q_net : std_logic_vector( 15-1 downto 0 );
-  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
+  signal logical_y_net : std_logic_vector( 1-1 downto 0 );
 begin
   x_out <= addsub2_s_net;
   delay18_q_net <= x_in;
   delay19_q_net <= y_in;
-  clk_net <= clk_6400;
-  ce_net <= ce_6400;
+  clk_net <= clk_640;
+  ce_net <= ce_640;
   addsub2 : entity xil_defaultlib.sysgen_addsub_8e916c5190 
   port map (
     clr => '0',
@@ -965,32 +965,32 @@ entity axi_qpsk_rx_csync_vectoring_cell_0 is
   port (
     x_in : in std_logic_vector( 16-1 downto 0 );
     y_in : in std_logic_vector( 16-1 downto 0 );
-    clk_6400 : in std_logic;
-    ce_6400 : in std_logic;
+    clk_640 : in std_logic;
+    ce_640 : in std_logic;
     x_out : out std_logic_vector( 15-1 downto 0 );
     y_out : out std_logic_vector( 15-1 downto 0 )
   );
 end axi_qpsk_rx_csync_vectoring_cell_0;
 architecture structural of axi_qpsk_rx_csync_vectoring_cell_0 is 
-  signal addsub3_s_net : std_logic_vector( 15-1 downto 0 );
   signal addsub2_s_net : std_logic_vector( 15-1 downto 0 );
   signal shift_op_net : std_logic_vector( 16-1 downto 0 );
-  signal shift1_op_net : std_logic_vector( 16-1 downto 0 );
   signal clk_net : std_logic;
+  signal addsub3_s_net : std_logic_vector( 15-1 downto 0 );
   signal ce_net : std_logic;
+  signal shift1_op_net : std_logic_vector( 16-1 downto 0 );
+  signal logical_y_net : std_logic_vector( 1-1 downto 0 );
   signal shift1_op_net_x0 : std_logic_vector( 15-1 downto 0 );
   signal inverter_op_net : std_logic_vector( 1-1 downto 0 );
-  signal logical_y_net : std_logic_vector( 1-1 downto 0 );
+  signal shift_op_net_x0 : std_logic_vector( 15-1 downto 0 );
   signal slice_y_net : std_logic_vector( 1-1 downto 0 );
   signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
-  signal shift_op_net_x0 : std_logic_vector( 15-1 downto 0 );
 begin
   x_out <= addsub2_s_net;
   y_out <= addsub3_s_net;
   shift_op_net <= x_in;
   shift1_op_net <= y_in;
-  clk_net <= clk_6400;
-  ce_net <= ce_6400;
+  clk_net <= clk_640;
+  ce_net <= ce_640;
   addsub2 : entity xil_defaultlib.sysgen_addsub_99c3c5c8fa 
   port map (
     clr => '0',
@@ -1076,32 +1076,32 @@ entity axi_qpsk_rx_csync_vectoring_cell_1 is
   port (
     x_in : in std_logic_vector( 15-1 downto 0 );
     y_in : in std_logic_vector( 15-1 downto 0 );
-    clk_6400 : in std_logic;
-    ce_6400 : in std_logic;
+    clk_640 : in std_logic;
+    ce_640 : in std_logic;
     x_out : out std_logic_vector( 15-1 downto 0 );
     y_out : out std_logic_vector( 15-1 downto 0 )
   );
 end axi_qpsk_rx_csync_vectoring_cell_1;
 architecture structural of axi_qpsk_rx_csync_vectoring_cell_1 is 
-  signal shift1_op_net : std_logic_vector( 15-1 downto 0 );
   signal logical_y_net : std_logic_vector( 1-1 downto 0 );
+  signal ce_net : std_logic;
+  signal shift_op_net : std_logic_vector( 15-1 downto 0 );
+  signal inverter_op_net : std_logic_vector( 1-1 downto 0 );
+  signal shift1_op_net : std_logic_vector( 15-1 downto 0 );
+  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
+  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
   signal addsub2_s_net : std_logic_vector( 15-1 downto 0 );
-  signal delay2_q_net : std_logic_vector( 15-1 downto 0 );
-  signal clk_net : std_logic;
   signal addsub3_s_net : std_logic_vector( 15-1 downto 0 );
   signal delay3_q_net : std_logic_vector( 15-1 downto 0 );
-  signal ce_net : std_logic;
-  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
-  signal inverter_op_net : std_logic_vector( 1-1 downto 0 );
-  signal shift_op_net : std_logic_vector( 15-1 downto 0 );
-  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
+  signal delay2_q_net : std_logic_vector( 15-1 downto 0 );
+  signal clk_net : std_logic;
 begin
   x_out <= addsub2_s_net;
   y_out <= addsub3_s_net;
   delay2_q_net <= x_in;
   delay3_q_net <= y_in;
-  clk_net <= clk_6400;
-  ce_net <= ce_6400;
+  clk_net <= clk_640;
+  ce_net <= ce_640;
   addsub2 : entity xil_defaultlib.sysgen_addsub_8e916c5190 
   port map (
     clr => '0',
@@ -1187,57 +1187,57 @@ entity axi_qpsk_rx_csync_cordic_vector_magnitude1 is
   port (
     i_in : in std_logic_vector( 16-1 downto 0 );
     q_in : in std_logic_vector( 16-1 downto 0 );
-    clk_6400 : in std_logic;
-    ce_6400 : in std_logic;
+    clk_640 : in std_logic;
+    ce_640 : in std_logic;
     mag : out std_logic_vector( 15-1 downto 0 )
   );
 end axi_qpsk_rx_csync_cordic_vector_magnitude1;
 architecture structural of axi_qpsk_rx_csync_cordic_vector_magnitude1 is 
-  signal ce_net : std_logic;
-  signal shift_op_net : std_logic_vector( 16-1 downto 0 );
-  signal delay5_q_net : std_logic_vector( 15-1 downto 0 );
-  signal addsub2_s_net_x5 : std_logic_vector( 15-1 downto 0 );
-  signal delay10_q_net : std_logic_vector( 15-1 downto 0 );
-  signal addsub3_s_net_x5 : std_logic_vector( 15-1 downto 0 );
   signal addsub2_s_net_x1 : std_logic_vector( 15-1 downto 0 );
-  signal delay8_q_net : std_logic_vector( 15-1 downto 0 );
+  signal shift_op_net : std_logic_vector( 16-1 downto 0 );
   signal shift1_op_net : std_logic_vector( 16-1 downto 0 );
   signal clk_net : std_logic;
+  signal ce_net : std_logic;
   signal addsub3_s_net_x6 : std_logic_vector( 15-1 downto 0 );
-  signal delay9_q_net : std_logic_vector( 15-1 downto 0 );
-  signal addsub2_s_net_x4 : std_logic_vector( 15-1 downto 0 );
-  signal addsub3_s_net_x4 : std_logic_vector( 15-1 downto 0 );
+  signal delay5_q_net : std_logic_vector( 15-1 downto 0 );
+  signal delay6_q_net : std_logic_vector( 15-1 downto 0 );
+  signal addsub2_s_net_x6 : std_logic_vector( 15-1 downto 0 );
+  signal addsub2_s_net_x5 : std_logic_vector( 15-1 downto 0 );
+  signal addsub3_s_net_x5 : std_logic_vector( 15-1 downto 0 );
+  signal addsub2_s_net : std_logic_vector( 15-1 downto 0 );
+  signal addsub3_s_net_x2 : std_logic_vector( 15-1 downto 0 );
+  signal addsub2_s_net_x2 : std_logic_vector( 15-1 downto 0 );
   signal addsub2_s_net_x3 : std_logic_vector( 15-1 downto 0 );
+  signal addsub3_s_net_x4 : std_logic_vector( 15-1 downto 0 );
   signal delay12_q_net : std_logic_vector( 15-1 downto 0 );
   signal delay13_q_net : std_logic_vector( 15-1 downto 0 );
-  signal addsub2_s_net_x6 : std_logic_vector( 15-1 downto 0 );
-  signal addsub2_s_net_x2 : std_logic_vector( 15-1 downto 0 );
-  signal delay22_q_net : std_logic_vector( 15-1 downto 0 );
-  signal addsub3_s_net_x3 : std_logic_vector( 15-1 downto 0 );
-  signal addsub3_s_net_x2 : std_logic_vector( 15-1 downto 0 );
-  signal delay6_q_net : std_logic_vector( 15-1 downto 0 );
-  signal delay15_q_net : std_logic_vector( 15-1 downto 0 );
-  signal delay16_q_net : std_logic_vector( 15-1 downto 0 );
-  signal delay18_q_net : std_logic_vector( 15-1 downto 0 );
-  signal delay19_q_net : std_logic_vector( 15-1 downto 0 );
-  signal addsub2_s_net : std_logic_vector( 15-1 downto 0 );
-  signal delay3_q_net : std_logic_vector( 15-1 downto 0 );
-  signal addsub3_s_net_x0 : std_logic_vector( 15-1 downto 0 );
   signal addsub2_s_net_x0 : std_logic_vector( 15-1 downto 0 );
-  signal addsub3_s_net : std_logic_vector( 15-1 downto 0 );
   signal delay2_q_net : std_logic_vector( 15-1 downto 0 );
+  signal addsub3_s_net_x0 : std_logic_vector( 15-1 downto 0 );
+  signal delay16_q_net : std_logic_vector( 15-1 downto 0 );
+  signal delay3_q_net : std_logic_vector( 15-1 downto 0 );
+  signal addsub3_s_net_x3 : std_logic_vector( 15-1 downto 0 );
+  signal delay15_q_net : std_logic_vector( 15-1 downto 0 );
+  signal delay9_q_net : std_logic_vector( 15-1 downto 0 );
+  signal delay18_q_net : std_logic_vector( 15-1 downto 0 );
+  signal delay22_q_net : std_logic_vector( 15-1 downto 0 );
+  signal addsub3_s_net : std_logic_vector( 15-1 downto 0 );
+  signal delay8_q_net : std_logic_vector( 15-1 downto 0 );
+  signal addsub2_s_net_x4 : std_logic_vector( 15-1 downto 0 );
+  signal delay10_q_net : std_logic_vector( 15-1 downto 0 );
+  signal delay19_q_net : std_logic_vector( 15-1 downto 0 );
 begin
   mag <= addsub2_s_net_x1;
   shift_op_net <= i_in;
   shift1_op_net <= q_in;
-  clk_net <= clk_6400;
-  ce_net <= ce_6400;
+  clk_net <= clk_640;
+  ce_net <= ce_640;
   vectoring_cell_2 : entity xil_defaultlib.axi_qpsk_rx_csync_vectoring_cell_2 
   port map (
     x_in => delay5_q_net,
     y_in => delay6_q_net,
-    clk_6400 => clk_net,
-    ce_6400 => ce_net,
+    clk_640 => clk_net,
+    ce_640 => ce_net,
     x_out => addsub2_s_net_x6,
     y_out => addsub3_s_net_x6
   );
@@ -1245,8 +1245,8 @@ begin
   port map (
     x_in => delay8_q_net,
     y_in => delay9_q_net,
-    clk_6400 => clk_net,
-    ce_6400 => ce_net,
+    clk_640 => clk_net,
+    ce_640 => ce_net,
     x_out => addsub2_s_net_x5,
     y_out => addsub3_s_net_x5
   );
@@ -1254,8 +1254,8 @@ begin
   port map (
     x_in => delay22_q_net,
     y_in => delay10_q_net,
-    clk_6400 => clk_net,
-    ce_6400 => ce_net,
+    clk_640 => clk_net,
+    ce_640 => ce_net,
     x_out => addsub2_s_net_x4,
     y_out => addsub3_s_net_x4
   );
@@ -1263,8 +1263,8 @@ begin
   port map (
     x_in => delay12_q_net,
     y_in => delay13_q_net,
-    clk_6400 => clk_net,
-    ce_6400 => ce_net,
+    clk_640 => clk_net,
+    ce_640 => ce_net,
     x_out => addsub2_s_net_x3,
     y_out => addsub3_s_net_x3
   );
@@ -1272,8 +1272,8 @@ begin
   port map (
     x_in => delay15_q_net,
     y_in => delay16_q_net,
-    clk_6400 => clk_net,
-    ce_6400 => ce_net,
+    clk_640 => clk_net,
+    ce_640 => ce_net,
     x_out => addsub2_s_net_x2,
     y_out => addsub3_s_net_x2
   );
@@ -1281,16 +1281,16 @@ begin
   port map (
     x_in => delay18_q_net,
     y_in => delay19_q_net,
-    clk_6400 => clk_net,
-    ce_6400 => ce_net,
+    clk_640 => clk_net,
+    ce_640 => ce_net,
     x_out => addsub2_s_net_x1
   );
   vectoring_cell_0 : entity xil_defaultlib.axi_qpsk_rx_csync_vectoring_cell_0 
   port map (
     x_in => shift_op_net,
     y_in => shift1_op_net,
-    clk_6400 => clk_net,
-    ce_6400 => ce_net,
+    clk_640 => clk_net,
+    ce_640 => ce_net,
     x_out => addsub2_s_net_x0,
     y_out => addsub3_s_net_x0
   );
@@ -1298,8 +1298,8 @@ begin
   port map (
     x_in => delay2_q_net,
     y_in => delay3_q_net,
-    clk_6400 => clk_net,
-    ce_6400 => ce_net,
+    clk_640 => clk_net,
+    ce_640 => ce_net,
     x_out => addsub2_s_net,
     y_out => addsub3_s_net
   );
@@ -1525,33 +1525,33 @@ entity axi_qpsk_rx_csync_scaled_mag_squared_fft is
     re : in std_logic_vector( 26-1 downto 0 );
     fft_index : in std_logic_vector( 9-1 downto 0 );
     valid : in std_logic;
-    clk_6400 : in std_logic;
-    ce_6400 : in std_logic;
+    clk_640 : in std_logic;
+    ce_640 : in std_logic;
     mag_sq_fft : out std_logic_vector( 30-1 downto 0 );
     fft_index_del : out std_logic_vector( 9-1 downto 0 );
     valid_del : out std_logic_vector( 1-1 downto 0 )
   );
 end axi_qpsk_rx_csync_scaled_mag_squared_fft;
 architecture structural of axi_qpsk_rx_csync_scaled_mag_squared_fft is 
-  signal mult1_p_net : std_logic_vector( 19-1 downto 0 );
-  signal delay1_q_net : std_logic_vector( 9-1 downto 0 );
-  signal fft_m_axis_data_tuser_xk_index_net : std_logic_vector( 9-1 downto 0 );
-  signal shift_op_net : std_logic_vector( 16-1 downto 0 );
-  signal fft_m_axis_data_tvalid_net : std_logic;
+  signal delay3_q_net : std_logic_vector( 9-1 downto 0 );
+  signal delay8_q_net : std_logic_vector( 30-1 downto 0 );
+  signal delay4_q_net : std_logic_vector( 9-1 downto 0 );
   signal delay9_q_net : std_logic_vector( 1-1 downto 0 );
+  signal convert9_dout_net : std_logic_vector( 30-1 downto 0 );
+  signal mult1_p_net : std_logic_vector( 19-1 downto 0 );
+  signal addsub2_s_net : std_logic_vector( 15-1 downto 0 );
+  signal shift_op_net : std_logic_vector( 16-1 downto 0 );
   signal shift1_op_net : std_logic_vector( 16-1 downto 0 );
+  signal fft_m_axis_data_tdata_xn_re_0_net : std_logic_vector( 26-1 downto 0 );
   signal fft_m_axis_data_tdata_xn_im_0_net : std_logic_vector( 26-1 downto 0 );
+  signal fft_m_axis_data_tuser_xk_index_net : std_logic_vector( 9-1 downto 0 );
+  signal fft_m_axis_data_tvalid_net : std_logic;
   signal clk_net : std_logic;
   signal ce_net : std_logic;
-  signal fft_m_axis_data_tdata_xn_re_0_net : std_logic_vector( 26-1 downto 0 );
-  signal delay4_q_net : std_logic_vector( 9-1 downto 0 );
-  signal convert9_dout_net : std_logic_vector( 30-1 downto 0 );
-  signal delay8_q_net : std_logic_vector( 30-1 downto 0 );
-  signal addsub2_s_net : std_logic_vector( 15-1 downto 0 );
-  signal delay5_q_net : std_logic_vector( 1-1 downto 0 );
-  signal delay7_q_net : std_logic_vector( 1-1 downto 0 );
-  signal delay3_q_net : std_logic_vector( 9-1 downto 0 );
+  signal delay1_q_net : std_logic_vector( 9-1 downto 0 );
   signal delay2_q_net : std_logic_vector( 9-1 downto 0 );
+  signal delay7_q_net : std_logic_vector( 1-1 downto 0 );
+  signal delay5_q_net : std_logic_vector( 1-1 downto 0 );
   signal delay6_q_net : std_logic_vector( 1-1 downto 0 );
 begin
   mag_sq_fft <= delay8_q_net;
@@ -1561,14 +1561,14 @@ begin
   fft_m_axis_data_tdata_xn_re_0_net <= re;
   fft_m_axis_data_tuser_xk_index_net <= fft_index;
   fft_m_axis_data_tvalid_net <= valid;
-  clk_net <= clk_6400;
-  ce_net <= ce_6400;
+  clk_net <= clk_640;
+  ce_net <= ce_640;
   cordic_vector_magnitude1 : entity xil_defaultlib.axi_qpsk_rx_csync_cordic_vector_magnitude1 
   port map (
     i_in => shift_op_net,
     q_in => shift1_op_net,
-    clk_6400 => clk_net,
-    ce_6400 => ce_net,
+    clk_640 => clk_net,
+    ce_640 => ce_net,
     mag => addsub2_s_net
   );
   convert9 : entity xil_defaultlib.axi_qpsk_rx_csync_xlconvert 
@@ -1795,63 +1795,63 @@ entity axi_qpsk_rx_csync_coarse_frequency_synchroniser is
     tvalid_in : in std_logic_vector( 1-1 downto 0 );
     clk_1 : in std_logic;
     ce_1 : in std_logic;
-    clk_6400 : in std_logic;
-    ce_6400 : in std_logic;
-    clk_25600 : in std_logic;
-    ce_25600 : in std_logic;
+    clk_640 : in std_logic;
+    ce_640 : in std_logic;
+    clk_2560 : in std_logic;
+    ce_2560 : in std_logic;
     corrected_i : out std_logic_vector( 18-1 downto 0 );
     corrected_q : out std_logic_vector( 18-1 downto 0 );
     tvalid_out : out std_logic_vector( 1-1 downto 0 )
   );
 end axi_qpsk_rx_csync_coarse_frequency_synchroniser;
 architecture structural of axi_qpsk_rx_csync_coarse_frequency_synchroniser is 
-  signal fft_event_status_channel_halt_net : std_logic;
-  signal fft_event_data_out_channel_halt_net : std_logic;
+  signal sin_rom_data_net : std_logic_vector( 16-1 downto 0 );
+  signal clk_net : std_logic;
+  signal fft_m_axis_data_tdata_xn_re_0_net : std_logic_vector( 26-1 downto 0 );
+  signal delay1_q_net_x1 : std_logic_vector( 16-1 downto 0 );
+  signal cos_rom_data_net : std_logic_vector( 16-1 downto 0 );
+  signal constant2_op_net : std_logic_vector( 1-1 downto 0 );
+  signal constant3_op_net : std_logic_vector( 1-1 downto 0 );
+  signal delay8_q_net : std_logic_vector( 30-1 downto 0 );
+  signal constant4_op_net : std_logic_vector( 1-1 downto 0 );
+  signal fft_m_axis_data_tuser_xk_index_net : std_logic_vector( 9-1 downto 0 );
+  signal logical_y_net : std_logic_vector( 1-1 downto 0 );
+  signal fft_m_axis_data_tvalid_net : std_logic;
+  signal clk_net_x1 : std_logic;
+  signal ce_net : std_logic;
+  signal fft_m_axis_data_tdata_xn_im_0_net : std_logic_vector( 26-1 downto 0 );
+  signal delay1_q_net : std_logic_vector( 1-1 downto 0 );
+  signal rom_data_net : std_logic_vector( 23-1 downto 0 );
+  signal delay9_q_net : std_logic_vector( 1-1 downto 0 );
+  signal convert_dout_net : std_logic_vector( 19-1 downto 0 );
+  signal clk_net_x0 : std_logic;
+  signal ce_net_x0 : std_logic;
+  signal ce_net_x1 : std_logic;
+  signal delay4_q_net : std_logic_vector( 9-1 downto 0 );
+  signal product_p_re_net : std_logic_vector( 33-1 downto 0 );
+  signal delay2_q_net_x0 : std_logic_vector( 16-1 downto 0 );
+  signal convert4_dout_net : std_logic_vector( 18-1 downto 0 );
+  signal convert5_dout_net : std_logic_vector( 18-1 downto 0 );
+  signal delay2_q_net : std_logic_vector( 1-1 downto 0 );
+  signal product1_p_im_net : std_logic_vector( 39-1 downto 0 );
+  signal delay_q_net : std_logic_vector( 1-1 downto 0 );
+  signal convert2_dout_net : std_logic_vector( 16-1 downto 0 );
+  signal product_p_im_net : std_logic_vector( 33-1 downto 0 );
+  signal product2_p_re_net : std_logic_vector( 33-1 downto 0 );
+  signal convert1_dout_net : std_logic_vector( 19-1 downto 0 );
+  signal convert3_dout_net : std_logic_vector( 16-1 downto 0 );
+  signal product1_p_re_net : std_logic_vector( 39-1 downto 0 );
+  signal product2_p_im_net : std_logic_vector( 33-1 downto 0 );
   signal delay1_q_net_x0 : std_logic_vector( 1-1 downto 0 );
   signal fft_s_axis_config_tready_net : std_logic;
-  signal fft_m_axis_data_tlast_net : std_logic;
-  signal fft_event_frame_started_net : std_logic;
-  signal fft_event_tlast_unexpected_net : std_logic;
   signal fft_s_axis_data_tready_net : std_logic;
-  signal fft_event_tlast_missing_net : std_logic;
+  signal fft_event_tlast_unexpected_net : std_logic;
+  signal fft_event_status_channel_halt_net : std_logic;
+  signal fft_m_axis_data_tlast_net : std_logic;
   signal fft_event_data_in_channel_halt_net : std_logic;
-  signal product2_p_im_net : std_logic_vector( 33-1 downto 0 );
-  signal delay_q_net : std_logic_vector( 1-1 downto 0 );
-  signal constant2_op_net : std_logic_vector( 1-1 downto 0 );
-  signal convert4_dout_net : std_logic_vector( 18-1 downto 0 );
-  signal fft_m_axis_data_tvalid_net : std_logic;
-  signal clk_net_x0 : std_logic;
-  signal ce_net : std_logic;
-  signal constant3_op_net : std_logic_vector( 1-1 downto 0 );
-  signal ce_net_x0 : std_logic;
-  signal delay1_q_net_x1 : std_logic_vector( 16-1 downto 0 );
-  signal clk_net : std_logic;
-  signal delay8_q_net : std_logic_vector( 30-1 downto 0 );
-  signal delay2_q_net : std_logic_vector( 1-1 downto 0 );
-  signal clk_net_x1 : std_logic;
-  signal delay2_q_net_x0 : std_logic_vector( 16-1 downto 0 );
-  signal logical_y_net : std_logic_vector( 1-1 downto 0 );
-  signal rom_data_net : std_logic_vector( 19-1 downto 0 );
-  signal delay9_q_net : std_logic_vector( 1-1 downto 0 );
-  signal convert5_dout_net : std_logic_vector( 18-1 downto 0 );
-  signal ce_net_x1 : std_logic;
-  signal sin_rom_data_net : std_logic_vector( 16-1 downto 0 );
-  signal fft_m_axis_data_tdata_xn_re_0_net : std_logic_vector( 26-1 downto 0 );
-  signal fft_m_axis_data_tuser_xk_index_net : std_logic_vector( 9-1 downto 0 );
-  signal fft_m_axis_data_tdata_xn_im_0_net : std_logic_vector( 26-1 downto 0 );
-  signal delay4_q_net : std_logic_vector( 9-1 downto 0 );
-  signal cos_rom_data_net : std_logic_vector( 16-1 downto 0 );
-  signal delay1_q_net : std_logic_vector( 1-1 downto 0 );
-  signal product2_p_re_net : std_logic_vector( 33-1 downto 0 );
-  signal convert3_dout_net : std_logic_vector( 16-1 downto 0 );
-  signal product_p_re_net : std_logic_vector( 33-1 downto 0 );
-  signal product1_p_im_net : std_logic_vector( 39-1 downto 0 );
-  signal constant4_op_net : std_logic_vector( 1-1 downto 0 );
-  signal convert_dout_net : std_logic_vector( 19-1 downto 0 );
-  signal product_p_im_net : std_logic_vector( 33-1 downto 0 );
-  signal convert1_dout_net : std_logic_vector( 19-1 downto 0 );
-  signal convert2_dout_net : std_logic_vector( 16-1 downto 0 );
-  signal product1_p_re_net : std_logic_vector( 39-1 downto 0 );
+  signal fft_event_data_out_channel_halt_net : std_logic;
+  signal fft_event_frame_started_net : std_logic;
+  signal fft_event_tlast_missing_net : std_logic;
 begin
   corrected_i <= convert4_dout_net;
   corrected_q <= convert5_dout_net;
@@ -1861,17 +1861,17 @@ begin
   logical_y_net <= tvalid_in;
   clk_net_x0 <= clk_1;
   ce_net <= ce_1;
-  clk_net_x1 <= clk_6400;
-  ce_net_x1 <= ce_6400;
-  clk_net <= clk_25600;
-  ce_net_x0 <= ce_25600;
+  clk_net_x1 <= clk_640;
+  ce_net_x1 <= ce_640;
+  clk_net <= clk_2560;
+  ce_net_x0 <= ce_2560;
   determine_frequency_correction_term : entity xil_defaultlib.axi_qpsk_rx_csync_determine_frequency_correction_term 
   port map (
     mag_sq_fft => delay8_q_net,
     fft_index => delay4_q_net,
     valid => delay9_q_net,
-    clk_6400 => clk_net_x1,
-    ce_6400 => ce_net_x1,
+    clk_640 => clk_net_x1,
+    ce_640 => ce_net_x1,
     freq_correction => rom_data_net,
     valid_out => delay1_q_net
   );
@@ -1879,8 +1879,8 @@ begin
   port map (
     freq_correction => rom_data_net,
     en => delay1_q_net,
-    clk_6400 => clk_net_x1,
-    ce_6400 => ce_net_x1,
+    clk_640 => clk_net_x1,
+    ce_640 => ce_net_x1,
     cos => cos_rom_data_net,
     sin => sin_rom_data_net
   );
@@ -1890,8 +1890,8 @@ begin
     re => fft_m_axis_data_tdata_xn_re_0_net,
     fft_index => fft_m_axis_data_tuser_xk_index_net,
     valid => fft_m_axis_data_tvalid_net,
-    clk_6400 => clk_net_x1,
-    ce_6400 => ce_net_x1,
+    clk_640 => clk_net_x1,
+    ce_640 => ce_net_x1,
     mag_sq_fft => delay8_q_net,
     fft_index_del => delay4_q_net,
     valid_del => delay9_q_net
@@ -2113,7 +2113,7 @@ begin
     event_status_channel_halt => fft_event_status_channel_halt_net,
     event_data_out_channel_halt => fft_event_data_out_channel_halt_net
   );
-  product : entity xil_defaultlib.xlaxi_qpsk_rx_csync_cmpy_v6_0_i0_d4df45f10555148f1bc97124f5a651f0 
+  product : entity xil_defaultlib.xlaxi_qpsk_rx_csync_cmpy_v6_0_i0_01c81a5089cda12aebdfd8424b7ce83b 
   port map (
     a_re => delay2_q_net_x0,
     a_im => delay1_q_net_x1,
@@ -2121,12 +2121,12 @@ begin
     b_im => delay1_q_net_x1,
     clk => clk_net_x0,
     ce => ce_net,
-    clk_25600 => clk_net,
-    ce_25600 => ce_net_x0,
+    clk_2560 => clk_net,
+    ce_2560 => ce_net_x0,
     p_re => product_p_re_net,
     p_im => product_p_im_net
   );
-  product1 : entity xil_defaultlib.xlaxi_qpsk_rx_csync_cmpy_v6_0_i1_c73f94df2cde07643235f0dccf6e8a54 
+  product1 : entity xil_defaultlib.xlaxi_qpsk_rx_csync_cmpy_v6_0_i1_43326ea9b884d876bdeb81697b168939 
   port map (
     a_re => convert_dout_net,
     a_im => convert1_dout_net,
@@ -2134,12 +2134,12 @@ begin
     b_im => convert1_dout_net,
     clk => clk_net_x0,
     ce => ce_net,
-    clk_25600 => clk_net,
-    ce_25600 => ce_net_x0,
+    clk_2560 => clk_net,
+    ce_2560 => ce_net_x0,
     p_re => product1_p_re_net,
     p_im => product1_p_im_net
   );
-  product2 : entity xil_defaultlib.xlaxi_qpsk_rx_csync_cmpy_v6_0_i0_152106942e580a70937a347604186697 
+  product2 : entity xil_defaultlib.xlaxi_qpsk_rx_csync_cmpy_v6_0_i0_d86333cd5f12e9530754ffa46c03bb1f 
   port map (
     a_re => delay2_q_net_x0,
     a_im => delay1_q_net_x1,
@@ -2147,8 +2147,8 @@ begin
     b_im => sin_rom_data_net,
     clk => clk_net_x0,
     ce => ce_net,
-    clk_6400 => clk_net_x1,
-    ce_6400 => ce_net_x1,
+    clk_640 => clk_net_x1,
+    ce_640 => ce_net_x1,
     p_re => product2_p_re_net,
     p_im => product2_p_im_net
   );
@@ -2169,46 +2169,46 @@ entity axi_qpsk_rx_csync_axi_write_interface is
     tready : in std_logic_vector( 1-1 downto 0 );
     clk_1 : in std_logic;
     ce_1 : in std_logic;
-    ce_6400 : in std_logic;
+    ce_640 : in std_logic;
     tdata_out : out std_logic_vector( 32-1 downto 0 );
     tlast_out : out std_logic_vector( 1-1 downto 0 );
     tvalid_out : out std_logic_vector( 1-1 downto 0 )
   );
 end axi_qpsk_rx_csync_axi_write_interface;
 architecture structural of axi_qpsk_rx_csync_axi_write_interface is 
-  signal register4_q_net : std_logic_vector( 1-1 downto 0 );
-  signal register3_q_net : std_logic_vector( 1-1 downto 0 );
-  signal slice2_y_net : std_logic_vector( 1-1 downto 0 );
-  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
-  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
-  signal register5_q_net : std_logic_vector( 32-1 downto 0 );
+  signal ce_net_x0 : std_logic;
   signal packetsizerf_net : std_logic_vector( 32-1 downto 0 );
-  signal concat_y_net : std_logic_vector( 32-1 downto 0 );
-  signal relational_op_net : std_logic_vector( 1-1 downto 0 );
   signal m_axis_tap_tready_net : std_logic_vector( 1-1 downto 0 );
-  signal convert1_dout_net : std_logic_vector( 1-1 downto 0 );
+  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
   signal clk_net : std_logic;
   signal delay2_q_net : std_logic_vector( 1-1 downto 0 );
-  signal ce_net_x0 : std_logic;
-  signal constant_op_net : std_logic_vector( 11-1 downto 0 );
-  signal convert_dout_net : std_logic_vector( 1-1 downto 0 );
-  signal convert2_dout_net : std_logic_vector( 1-1 downto 0 );
+  signal ce_net : std_logic;
+  signal concat_y_net : std_logic_vector( 32-1 downto 0 );
   signal convert3_dout_net : std_logic_vector( 1-1 downto 0 );
-  signal convert5_dout_net : std_logic_vector( 1-1 downto 0 );
-  signal mcode_re_net : std_logic_vector( 1-1 downto 0 );
+  signal relational_op_net : std_logic_vector( 1-1 downto 0 );
+  signal convert2_dout_net : std_logic_vector( 1-1 downto 0 );
   signal counter_op_net : std_logic_vector( 32-1 downto 0 );
   signal logical_y_net : std_logic_vector( 1-1 downto 0 );
-  signal logical1_y_net : std_logic_vector( 1-1 downto 0 );
-  signal ce_net : std_logic;
-  signal fifo_empty_net : std_logic;
+  signal convert1_dout_net : std_logic_vector( 1-1 downto 0 );
+  signal mcode_re_net : std_logic_vector( 1-1 downto 0 );
+  signal convert5_dout_net : std_logic_vector( 1-1 downto 0 );
+  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
+  signal slice2_y_net : std_logic_vector( 1-1 downto 0 );
+  signal register5_q_net : std_logic_vector( 32-1 downto 0 );
+  signal register3_q_net : std_logic_vector( 1-1 downto 0 );
+  signal register4_q_net : std_logic_vector( 1-1 downto 0 );
+  signal constant_op_net : std_logic_vector( 11-1 downto 0 );
+  signal convert_dout_net : std_logic_vector( 1-1 downto 0 );
   signal logical2_y_net : std_logic;
-  signal inverter_op_net : std_logic_vector( 1-1 downto 0 );
+  signal fifo_full_net : std_logic;
+  signal logical1_y_net : std_logic_vector( 1-1 downto 0 );
   signal relational1_op_net : std_logic_vector( 1-1 downto 0 );
-  signal fifo_dout_net : std_logic_vector( 32-1 downto 0 );
-  signal fifo_dcount_net : std_logic_vector( 10-1 downto 0 );
   signal logical3_y_net : std_logic_vector( 1-1 downto 0 );
   signal inverter1_op_net : std_logic_vector( 1-1 downto 0 );
-  signal fifo_full_net : std_logic;
+  signal inverter_op_net : std_logic_vector( 1-1 downto 0 );
+  signal fifo_empty_net : std_logic;
+  signal fifo_dout_net : std_logic_vector( 32-1 downto 0 );
+  signal fifo_dcount_net : std_logic_vector( 10-1 downto 0 );
 begin
   tdata_out <= register5_q_net;
   tlast_out <= register3_q_net;
@@ -2222,7 +2222,7 @@ begin
   m_axis_tap_tready_net <= tready;
   clk_net <= clk_1;
   ce_net <= ce_1;
-  ce_net_x0 <= ce_6400;
+  ce_net_x0 <= ce_640;
   constant_x0 : entity xil_defaultlib.sysgen_constant_aeac21b3e1 
   port map (
     clk => '0',
@@ -2427,7 +2427,7 @@ begin
     d1 => inverter_op_net,
     y => logical3_y_net
   );
-  mcode : entity xil_defaultlib.sysgen_mcode_block_14b2ee0761 
+  mcode : entity xil_defaultlib.sysgen_mcode_block_7028f8a2ba 
   port map (
     clr => '0',
     axiwrite => convert_dout_net,
@@ -2513,29 +2513,29 @@ entity axi_qpsk_rx_csync_m_axis_symbol_ctrl is
     auto_restart : in std_logic_vector( 1-1 downto 0 );
     clk_1 : in std_logic;
     ce_1 : in std_logic;
-    ce_6400 : in std_logic;
+    ce_640 : in std_logic;
     tdata_out : out std_logic_vector( 32-1 downto 0 );
     tvalid_out : out std_logic_vector( 1-1 downto 0 );
     tlast_out : out std_logic_vector( 1-1 downto 0 )
   );
 end axi_qpsk_rx_csync_m_axis_symbol_ctrl;
 architecture structural of axi_qpsk_rx_csync_m_axis_symbol_ctrl is 
-  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
   signal delay2_q_net : std_logic_vector( 1-1 downto 0 );
-  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
-  signal packetsizerf_net : std_logic_vector( 32-1 downto 0 );
   signal clk_net : std_logic;
   signal register3_q_net : std_logic_vector( 1-1 downto 0 );
-  signal reinterpret4_output_port_net : std_logic_vector( 16-1 downto 0 );
-  signal reinterpret5_output_port_net : std_logic_vector( 16-1 downto 0 );
-  signal register4_q_net : std_logic_vector( 1-1 downto 0 );
   signal m_axis_tap_tready_net : std_logic_vector( 1-1 downto 0 );
   signal convert4_dout_net : std_logic_vector( 32-1 downto 0 );
-  signal slice2_y_net : std_logic_vector( 1-1 downto 0 );
-  signal register5_q_net : std_logic_vector( 32-1 downto 0 );
   signal concat_y_net : std_logic_vector( 32-1 downto 0 );
-  signal ce_net : std_logic;
+  signal reinterpret5_output_port_net : std_logic_vector( 16-1 downto 0 );
+  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
+  signal slice2_y_net : std_logic_vector( 1-1 downto 0 );
   signal ce_net_x0 : std_logic;
+  signal register4_q_net : std_logic_vector( 1-1 downto 0 );
+  signal ce_net : std_logic;
+  signal register5_q_net : std_logic_vector( 32-1 downto 0 );
+  signal packetsizerf_net : std_logic_vector( 32-1 downto 0 );
+  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
+  signal reinterpret4_output_port_net : std_logic_vector( 16-1 downto 0 );
   signal reinterpret_output_port_net : std_logic_vector( 16-1 downto 0 );
   signal reinterpret1_output_port_net : std_logic_vector( 16-1 downto 0 );
 begin
@@ -2552,7 +2552,7 @@ begin
   slice_y_net <= auto_restart;
   clk_net <= clk_1;
   ce_net <= ce_1;
-  ce_net_x0 <= ce_6400;
+  ce_net_x0 <= ce_640;
   axi_write_interface : entity xil_defaultlib.axi_qpsk_rx_csync_axi_write_interface 
   port map (
     int_reset => slice1_y_net,
@@ -2564,7 +2564,7 @@ begin
     tready => m_axis_tap_tready_net,
     clk_1 => clk_net,
     ce_1 => ce_net,
-    ce_6400 => ce_net_x0,
+    ce_640 => ce_net_x0,
     tdata_out => register5_q_net,
     tlast_out => register3_q_net,
     tvalid_out => register4_q_net
@@ -2633,27 +2633,27 @@ entity axi_qpsk_rx_csync_data_inspector is
     tready_in : in std_logic_vector( 1-1 downto 0 );
     clk_1 : in std_logic;
     ce_1 : in std_logic;
-    ce_6400 : in std_logic;
+    ce_640 : in std_logic;
     tdata_out : out std_logic_vector( 32-1 downto 0 );
     tvalid_out : out std_logic_vector( 1-1 downto 0 );
     tlast_out : out std_logic_vector( 1-1 downto 0 )
   );
 end axi_qpsk_rx_csync_data_inspector;
 architecture structural of axi_qpsk_rx_csync_data_inspector is 
-  signal clk_net : std_logic;
-  signal ce_net : std_logic;
-  signal ce_net_x0 : std_logic;
-  signal register4_q_net : std_logic_vector( 1-1 downto 0 );
   signal reinterpret4_output_port_net : std_logic_vector( 16-1 downto 0 );
+  signal delay2_q_net : std_logic_vector( 1-1 downto 0 );
+  signal m_axis_tap_tready_net : std_logic_vector( 1-1 downto 0 );
+  signal clk_net : std_logic;
+  signal register4_q_net : std_logic_vector( 1-1 downto 0 );
+  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
+  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
+  signal ce_net : std_logic;
   signal register3_q_net : std_logic_vector( 1-1 downto 0 );
+  signal slice2_y_net : std_logic_vector( 1-1 downto 0 );
+  signal ce_net_x0 : std_logic;
   signal packetsizerf_net : std_logic_vector( 32-1 downto 0 );
   signal convert4_dout_net : std_logic_vector( 32-1 downto 0 );
   signal reinterpret5_output_port_net : std_logic_vector( 16-1 downto 0 );
-  signal slice2_y_net : std_logic_vector( 1-1 downto 0 );
-  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
-  signal m_axis_tap_tready_net : std_logic_vector( 1-1 downto 0 );
-  signal delay2_q_net : std_logic_vector( 1-1 downto 0 );
-  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
 begin
   tdata_out <= convert4_dout_net;
   tvalid_out <= register4_q_net;
@@ -2668,7 +2668,7 @@ begin
   m_axis_tap_tready_net <= tready_in;
   clk_net <= clk_1;
   ce_net <= ce_1;
-  ce_net_x0 <= ce_6400;
+  ce_net_x0 <= ce_640;
   m_axis_symbol_ctrl : entity xil_defaultlib.axi_qpsk_rx_csync_m_axis_symbol_ctrl 
   port map (
     i_data => reinterpret4_output_port_net,
@@ -2681,7 +2681,7 @@ begin
     auto_restart => slice_y_net,
     clk_1 => clk_net,
     ce_1 => ce_net,
-    ce_6400 => ce_net_x0,
+    ce_640 => ce_net_x0,
     tdata_out => convert4_dout_net,
     tvalid_out => register4_q_net,
     tlast_out => register3_q_net
@@ -2729,10 +2729,10 @@ entity axi_qpsk_rx_csync_struct is
     m_axis_tap_tready : in std_logic_vector( 1-1 downto 0 );
     clk_1 : in std_logic;
     ce_1 : in std_logic;
-    clk_6400 : in std_logic;
-    ce_6400 : in std_logic;
-    clk_25600 : in std_logic;
-    ce_25600 : in std_logic;
+    clk_640 : in std_logic;
+    ce_640 : in std_logic;
+    clk_2560 : in std_logic;
+    ce_2560 : in std_logic;
     m_axis_tdata : out std_logic_vector( 32-1 downto 0 );
     m_axis_tvalid : out std_logic_vector( 1-1 downto 0 );
     m_axis_tap_tdata : out std_logic_vector( 32-1 downto 0 );
@@ -2741,47 +2741,47 @@ entity axi_qpsk_rx_csync_struct is
   );
 end axi_qpsk_rx_csync_struct;
 architecture structural of axi_qpsk_rx_csync_struct is 
-  signal shift_op_net : std_logic_vector( 16-1 downto 0 );
-  signal q_samples_y_net : std_logic_vector( 16-1 downto 0 );
-  signal shift1_op_net : std_logic_vector( 16-1 downto 0 );
-  signal i_samples_y_net : std_logic_vector( 16-1 downto 0 );
-  signal ce_net_x1 : std_logic;
-  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
   signal enable_net : std_logic_vector( 32-1 downto 0 );
-  signal delay2_q_net_x0 : std_logic_vector( 1-1 downto 0 );
-  signal packetsizerf_net : std_logic_vector( 32-1 downto 0 );
+  signal ce_net_x1 : std_logic;
+  signal reinterpret3_output_port_net : std_logic_vector( 16-1 downto 0 );
+  signal concat_y_net : std_logic_vector( 32-1 downto 0 );
   signal m_axis_tap_tready_net : std_logic_vector( 1-1 downto 0 );
-  signal clk_net_x0 : std_logic;
-  signal clk_net : std_logic;
-  signal s_axis_tdata_net : std_logic_vector( 32-1 downto 0 );
-  signal m_axis_tready_net : std_logic_vector( 1-1 downto 0 );
-  signal convert4_dout_net : std_logic_vector( 32-1 downto 0 );
-  signal ce_net : std_logic;
-  signal clk_net_x1 : std_logic;
-  signal s_axis_tvalid_net : std_logic_vector( 1-1 downto 0 );
   signal auto_restart_net : std_logic_vector( 32-1 downto 0 );
-  signal register4_q_net : std_logic_vector( 1-1 downto 0 );
-  signal convert4_dout_net_x0 : std_logic_vector( 18-1 downto 0 );
+  signal delay2_q_net_x0 : std_logic_vector( 1-1 downto 0 );
   signal convert5_dout_net : std_logic_vector( 18-1 downto 0 );
-  signal delay2_q_net : std_logic_vector( 16-1 downto 0 );
   signal logical_y_net : std_logic_vector( 1-1 downto 0 );
-  signal delay1_q_net : std_logic_vector( 16-1 downto 0 );
-  signal reinterpret4_output_port_net : std_logic_vector( 16-1 downto 0 );
+  signal ce_net : std_logic;
   signal reinterpret5_output_port_net : std_logic_vector( 16-1 downto 0 );
-  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
-  signal rxreset_net : std_logic_vector( 32-1 downto 0 );
-  signal register3_q_net : std_logic_vector( 1-1 downto 0 );
-  signal transfer_net : std_logic_vector( 32-1 downto 0 );
+  signal convert4_dout_net : std_logic_vector( 32-1 downto 0 );
+  signal m_axis_tready_net : std_logic_vector( 1-1 downto 0 );
+  signal s_axis_tvalid_net : std_logic_vector( 1-1 downto 0 );
+  signal delay1_q_net : std_logic_vector( 16-1 downto 0 );
   signal ce_net_x0 : std_logic;
   signal slice2_y_net : std_logic_vector( 1-1 downto 0 );
-  signal concat_y_net : std_logic_vector( 32-1 downto 0 );
   signal reinterpret2_output_port_net : std_logic_vector( 16-1 downto 0 );
-  signal reinterpret3_output_port_net : std_logic_vector( 16-1 downto 0 );
+  signal reinterpret4_output_port_net : std_logic_vector( 16-1 downto 0 );
+  signal slice1_y_net : std_logic_vector( 1-1 downto 0 );
+  signal clk_net_x0 : std_logic;
+  signal packetsizerf_net : std_logic_vector( 32-1 downto 0 );
+  signal clk_net : std_logic;
+  signal convert4_dout_net_x0 : std_logic_vector( 18-1 downto 0 );
+  signal slice_y_net : std_logic_vector( 1-1 downto 0 );
+  signal rxreset_net : std_logic_vector( 32-1 downto 0 );
+  signal transfer_net : std_logic_vector( 32-1 downto 0 );
   signal delay_q_net : std_logic_vector( 1-1 downto 0 );
+  signal clk_net_x1 : std_logic;
+  signal s_axis_tdata_net : std_logic_vector( 32-1 downto 0 );
+  signal register3_q_net : std_logic_vector( 1-1 downto 0 );
+  signal register4_q_net : std_logic_vector( 1-1 downto 0 );
+  signal delay2_q_net : std_logic_vector( 16-1 downto 0 );
+  signal i_samples_y_net : std_logic_vector( 16-1 downto 0 );
   signal reinterpret1_output_port_net : std_logic_vector( 16-1 downto 0 );
-  signal down_sample_q_net : std_logic_vector( 1-1 downto 0 );
-  signal slice3_y_net : std_logic_vector( 1-1 downto 0 );
   signal reinterpret_output_port_net : std_logic_vector( 16-1 downto 0 );
+  signal shift1_op_net : std_logic_vector( 16-1 downto 0 );
+  signal slice3_y_net : std_logic_vector( 1-1 downto 0 );
+  signal q_samples_y_net : std_logic_vector( 16-1 downto 0 );
+  signal down_sample_q_net : std_logic_vector( 1-1 downto 0 );
+  signal shift_op_net : std_logic_vector( 16-1 downto 0 );
 begin
   enable_net <= enable;
   packetsizerf_net <= packetsizerf;
@@ -2799,10 +2799,10 @@ begin
   m_axis_tap_tvalid <= register4_q_net;
   clk_net_x0 <= clk_1;
   ce_net_x0 <= ce_1;
-  clk_net <= clk_6400;
-  ce_net <= ce_6400;
-  clk_net_x1 <= clk_25600;
-  ce_net_x1 <= ce_25600;
+  clk_net <= clk_640;
+  ce_net <= ce_640;
+  clk_net_x1 <= clk_2560;
+  ce_net_x1 <= ce_2560;
   coarse_frequency_synchroniser : entity xil_defaultlib.axi_qpsk_rx_csync_coarse_frequency_synchroniser 
   port map (
     i_samples => delay2_q_net,
@@ -2810,10 +2810,10 @@ begin
     tvalid_in => logical_y_net,
     clk_1 => clk_net_x0,
     ce_1 => ce_net_x0,
-    clk_6400 => clk_net,
-    ce_6400 => ce_net,
-    clk_25600 => clk_net_x1,
-    ce_25600 => ce_net_x1,
+    clk_640 => clk_net,
+    ce_640 => ce_net,
+    clk_2560 => clk_net_x1,
+    ce_2560 => ce_net_x1,
     corrected_i => convert4_dout_net_x0,
     corrected_q => convert5_dout_net,
     tvalid_out => delay2_q_net_x0
@@ -2830,7 +2830,7 @@ begin
     tready_in => m_axis_tap_tready_net,
     clk_1 => clk_net_x0,
     ce_1 => ce_net_x0,
-    ce_6400 => ce_net,
+    ce_640 => ce_net,
     tdata_out => convert4_dout_net,
     tvalid_out => register4_q_net,
     tlast_out => register3_q_net
@@ -2901,9 +2901,9 @@ begin
     d_arith => xlUnsigned,
     d_bin_pt => 0,
     d_width => 1,
-    ds_ratio => 25600,
+    ds_ratio => 2560,
     latency => 1,
-    phase => 25599,
+    phase => 2559,
     q_arith => xlUnsigned,
     q_bin_pt => 0,
     q_width => 1
@@ -3072,10 +3072,10 @@ entity axi_qpsk_rx_csync_default_clock_driver is
     axi_qpsk_rx_csync_sysclr : in std_logic;
     axi_qpsk_rx_csync_clk1 : out std_logic;
     axi_qpsk_rx_csync_ce1 : out std_logic;
-    axi_qpsk_rx_csync_clk6400 : out std_logic;
-    axi_qpsk_rx_csync_ce6400 : out std_logic;
-    axi_qpsk_rx_csync_clk25600 : out std_logic;
-    axi_qpsk_rx_csync_ce25600 : out std_logic
+    axi_qpsk_rx_csync_clk640 : out std_logic;
+    axi_qpsk_rx_csync_ce640 : out std_logic;
+    axi_qpsk_rx_csync_clk2560 : out std_logic;
+    axi_qpsk_rx_csync_ce2560 : out std_logic
   );
 end axi_qpsk_rx_csync_default_clock_driver;
 architecture structural of axi_qpsk_rx_csync_default_clock_driver is 
@@ -3094,27 +3094,27 @@ begin
   );
   clockdriver_x0 : entity xil_defaultlib.xlclockdriver 
   generic map (
-    period => 6400,
-    log_2_period => 13
+    period => 640,
+    log_2_period => 10
   )
   port map (
     sysclk => axi_qpsk_rx_csync_sysclk,
     sysce => axi_qpsk_rx_csync_sysce,
     sysclr => axi_qpsk_rx_csync_sysclr,
-    clk => axi_qpsk_rx_csync_clk6400,
-    ce => axi_qpsk_rx_csync_ce6400
+    clk => axi_qpsk_rx_csync_clk640,
+    ce => axi_qpsk_rx_csync_ce640
   );
   clockdriver : entity xil_defaultlib.xlclockdriver 
   generic map (
-    period => 25600,
-    log_2_period => 15
+    period => 2560,
+    log_2_period => 12
   )
   port map (
     sysclk => axi_qpsk_rx_csync_sysclk,
     sysce => axi_qpsk_rx_csync_sysce,
     sysclr => axi_qpsk_rx_csync_sysclr,
-    clk => axi_qpsk_rx_csync_clk25600,
-    ce => axi_qpsk_rx_csync_ce25600
+    clk => axi_qpsk_rx_csync_clk2560,
+    ce => axi_qpsk_rx_csync_ce2560
   );
 end structural;
 -- Generated from Simulink block 
@@ -3157,17 +3157,17 @@ end axi_qpsk_rx_csync;
 architecture structural of axi_qpsk_rx_csync is 
   attribute core_generation_info : string;
   attribute core_generation_info of structural : architecture is "axi_qpsk_rx_csync,sysgen_core_2018_3,{,compilation=IP Catalog,block_icon_display=Default,family=zynquplusRFSOC,part=xczu28dr,speed=-2-e,package=ffvg1517,synthesis_language=vhdl,hdl_library=xil_defaultlib,synthesis_strategy=Vivado Synthesis Defaults,implementation_strategy=Vivado Implementation Defaults,testbench=0,interface_doc=0,ce_clr=0,clock_period=39.0625,system_simulink_period=3.90625e-08,waveform_viewer=0,axilite_interface=1,ip_catalog_plugin=0,hwcosim_burst_mode=0,simulation_time=10,addsub=25,cmult=1,concat=2,constant=14,convert=14,counter=1,delay=39,dsamp=1,fifo=1,inv=10,logical=14,mcode=1,mult=1,product_macro=3,register=6,reinterpret=8,relational=4,shift=20,slice=22,sprom=3,xfft_v9_1=1,}";
-  signal enable : std_logic_vector( 32-1 downto 0 );
-  signal ce_1_net : std_logic;
-  signal ce_6400_net : std_logic;
-  signal clk_25600_net : std_logic;
-  signal packetsizerf : std_logic_vector( 32-1 downto 0 );
-  signal transfer : std_logic_vector( 32-1 downto 0 );
-  signal clk_6400_net : std_logic;
+  signal clk_640_net : std_logic;
   signal auto_restart : std_logic_vector( 32-1 downto 0 );
-  signal clk_1_net : std_logic;
+  signal packetsizerf : std_logic_vector( 32-1 downto 0 );
   signal rxreset : std_logic_vector( 32-1 downto 0 );
-  signal ce_25600_net : std_logic;
+  signal enable : std_logic_vector( 32-1 downto 0 );
+  signal clk_2560_net : std_logic;
+  signal clk_1_net : std_logic;
+  signal ce_2560_net : std_logic;
+  signal transfer : std_logic_vector( 32-1 downto 0 );
+  signal ce_1_net : std_logic;
+  signal ce_640_net : std_logic;
   signal clk_net : std_logic;
 begin
   axi_qpsk_rx_csync_axi_lite_interface : entity xil_defaultlib.axi_qpsk_rx_csync_axi_lite_interface 
@@ -3205,10 +3205,10 @@ begin
     axi_qpsk_rx_csync_sysclr => '0',
     axi_qpsk_rx_csync_clk1 => clk_1_net,
     axi_qpsk_rx_csync_ce1 => ce_1_net,
-    axi_qpsk_rx_csync_clk6400 => clk_6400_net,
-    axi_qpsk_rx_csync_ce6400 => ce_6400_net,
-    axi_qpsk_rx_csync_clk25600 => clk_25600_net,
-    axi_qpsk_rx_csync_ce25600 => ce_25600_net
+    axi_qpsk_rx_csync_clk640 => clk_640_net,
+    axi_qpsk_rx_csync_ce640 => ce_640_net,
+    axi_qpsk_rx_csync_clk2560 => clk_2560_net,
+    axi_qpsk_rx_csync_ce2560 => ce_2560_net
   );
   axi_qpsk_rx_csync_struct : entity xil_defaultlib.axi_qpsk_rx_csync_struct 
   port map (
@@ -3223,10 +3223,10 @@ begin
     m_axis_tap_tready => m_axis_tap_tready,
     clk_1 => clk_1_net,
     ce_1 => ce_1_net,
-    clk_6400 => clk_6400_net,
-    ce_6400 => ce_6400_net,
-    clk_25600 => clk_25600_net,
-    ce_25600 => ce_25600_net,
+    clk_640 => clk_640_net,
+    ce_640 => ce_640_net,
+    clk_2560 => clk_2560_net,
+    ce_2560 => ce_2560_net,
     m_axis_tdata => m_axis_tdata,
     m_axis_tvalid => m_axis_tvalid,
     m_axis_tap_tdata => m_axis_tap_tdata,

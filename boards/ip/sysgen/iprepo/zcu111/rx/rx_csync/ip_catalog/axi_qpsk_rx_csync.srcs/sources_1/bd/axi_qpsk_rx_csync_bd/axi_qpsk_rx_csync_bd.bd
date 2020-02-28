@@ -6,7 +6,7 @@
       "device": "xczu28dr-ffvg1517-2-e",
       "name": "axi_qpsk_rx_csync_bd",
       "synth_flow_mode": "Hierarchical",
-      "tool_version": "2018.3",
+      "tool_version": "2018.3.1",
       "validated": "true"
     },
     "design_tree": {
@@ -315,16 +315,16 @@
           }
         },
         "interface_nets": {
+          "microblaze_1_dlmb_bus": {
+            "interface_ports": [
+              "dlmb_v10/LMB_Sl_0",
+              "dlmb_bram_if_cntlr/SLMB"
+            ]
+          },
           "microblaze_1_ilmb_bus": {
             "interface_ports": [
               "ilmb_v10/LMB_Sl_0",
               "ilmb_bram_if_cntlr/SLMB"
-            ]
-          },
-          "microblaze_1_ilmb_cntlr": {
-            "interface_ports": [
-              "ilmb_bram_if_cntlr/BRAM_PORT",
-              "lmb_bram/BRAM_PORTB"
             ]
           },
           "microblaze_1_dlmb_cntlr": {
@@ -333,10 +333,10 @@
               "lmb_bram/BRAM_PORTA"
             ]
           },
-          "microblaze_1_dlmb_bus": {
+          "microblaze_1_ilmb_cntlr": {
             "interface_ports": [
-              "dlmb_v10/LMB_Sl_0",
-              "dlmb_bram_if_cntlr/SLMB"
+              "ilmb_bram_if_cntlr/BRAM_PORT",
+              "lmb_bram/BRAM_PORTB"
             ]
           },
           "microblaze_1_dlmb": {
@@ -554,10 +554,28 @@
       }
     },
     "interface_nets": {
-      "microblaze_1_axi_periph_M00_AXI": {
+      "microblaze_1_dlmb_1": {
         "interface_ports": [
-          "microblaze_1_axi_periph/M00_AXI",
-          "axi_qpsk_rx_csync_1/axi_qpsk_rx_csync_s_axi"
+          "microblaze_1/DLMB",
+          "microblaze_1_local_memory/DLMB"
+        ]
+      },
+      "microblaze_1_ilmb_1": {
+        "interface_ports": [
+          "microblaze_1/ILMB",
+          "microblaze_1_local_memory/ILMB"
+        ]
+      },
+      "microblaze_1_axi_dp": {
+        "interface_ports": [
+          "microblaze_1_axi_periph/S00_AXI",
+          "microblaze_1/M_AXI_DP"
+        ]
+      },
+      "microblaze_1_debug": {
+        "interface_ports": [
+          "mdm_1/MBDEBUG_0",
+          "microblaze_1/DEBUG"
         ]
       },
       "CLK_IN1_D_1": {
@@ -566,10 +584,10 @@
           "clk_wiz_1/CLK_IN1_D"
         ]
       },
-      "axi_qpsk_rx_csync_1_m_axis": {
+      "microblaze_1_axi_periph_M00_AXI": {
         "interface_ports": [
-          "m_axis",
-          "axi_qpsk_rx_csync_1/m_axis"
+          "microblaze_1_axi_periph/M00_AXI",
+          "axi_qpsk_rx_csync_1/axi_qpsk_rx_csync_s_axi"
         ]
       },
       "axi_qpsk_rx_csync_1_m_axis_tap": {
@@ -584,28 +602,10 @@
           "axi_qpsk_rx_csync_1/s_axis"
         ]
       },
-      "microblaze_1_dlmb_1": {
+      "axi_qpsk_rx_csync_1_m_axis": {
         "interface_ports": [
-          "microblaze_1/DLMB",
-          "microblaze_1_local_memory/DLMB"
-        ]
-      },
-      "microblaze_1_ilmb_1": {
-        "interface_ports": [
-          "microblaze_1/ILMB",
-          "microblaze_1_local_memory/ILMB"
-        ]
-      },
-      "microblaze_1_debug": {
-        "interface_ports": [
-          "mdm_1/MBDEBUG_0",
-          "microblaze_1/DEBUG"
-        ]
-      },
-      "microblaze_1_axi_dp": {
-        "interface_ports": [
-          "microblaze_1_axi_periph/S00_AXI",
-          "microblaze_1/M_AXI_DP"
+          "m_axis",
+          "axi_qpsk_rx_csync_1/m_axis"
         ]
       }
     },

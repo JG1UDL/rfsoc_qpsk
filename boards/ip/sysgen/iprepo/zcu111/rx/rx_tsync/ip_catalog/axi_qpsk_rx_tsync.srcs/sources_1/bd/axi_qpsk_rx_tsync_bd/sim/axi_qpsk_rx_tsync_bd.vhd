@@ -1,8 +1,8 @@
---Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+--Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
---Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
---Date        : Fri May 31 17:15:51 2019
---Host        : xcojgoldsmi30 running 64-bit major release  (build 9200)
+--Tool Version: Vivado v.2018.3.1 (win64) Build 2489853 Tue Mar 26 04:20:25 MDT 2019
+--Date        : Fri Feb 21 17:37:33 2020
+--Host        : DESKTOP-UQKFOKL running 64-bit major release  (build 9200)
 --Command     : generate_target axi_qpsk_rx_tsync_bd.bd
 --Design      : axi_qpsk_rx_tsync_bd
 --Purpose     : IP block netlist

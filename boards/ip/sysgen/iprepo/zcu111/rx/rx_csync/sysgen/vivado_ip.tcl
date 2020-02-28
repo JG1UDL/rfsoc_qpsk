@@ -155,8 +155,8 @@ lappend params_list CONFIG.output_reset_value_a {0}
 lappend params_list CONFIG.output_reset_value_b {0}
 lappend params_list CONFIG.pipeline_stages {0}
 lappend params_list CONFIG.primitive {8kx2}
-lappend params_list CONFIG.read_width_a {19}
-lappend params_list CONFIG.read_width_b {19}
+lappend params_list CONFIG.read_width_a {23}
+lappend params_list CONFIG.read_width_b {23}
 lappend params_list CONFIG.register_porta_output_of_memory_core {false}
 lappend params_list CONFIG.register_porta_output_of_memory_primitives {false}
 lappend params_list CONFIG.register_portb_output_of_memory_core {false}
@@ -170,8 +170,8 @@ lappend params_list CONFIG.use_regceb_pin {false}
 lappend params_list CONFIG.use_rsta_pin {false}
 lappend params_list CONFIG.use_rstb_pin {false}
 lappend params_list CONFIG.write_depth_a {512}
-lappend params_list CONFIG.write_width_a {19}
-lappend params_list CONFIG.write_width_b {19}
+lappend params_list CONFIG.write_width_a {23}
+lappend params_list CONFIG.write_width_b {23}
 lappend params_list CONFIG.coe_file {../axi_qpsk_rx_csync_blk_mem_gen_i0_vivado.coe}
 
 set_property -dict $params_list [get_ips axi_qpsk_rx_csync_blk_mem_gen_i0]
@@ -219,14 +219,14 @@ set params_list [list]
 lappend params_list CONFIG.Component_Name {axi_qpsk_rx_csync_mult_gen_v12_0_i0}
 lappend params_list CONFIG.ccmimp {Distributed_Memory}
 lappend params_list CONFIG.clockenable {true}
-lappend params_list CONFIG.constvalue {262}
+lappend params_list CONFIG.constvalue {26}
 lappend params_list CONFIG.internaluser {0}
 lappend params_list CONFIG.multtype {Constant_Coefficient_Multiplier}
-lappend params_list CONFIG.outputwidthhigh {29}
+lappend params_list CONFIG.outputwidthhigh {33}
 lappend params_list CONFIG.outputwidthlow {0}
 lappend params_list CONFIG.pipestages {1}
 lappend params_list CONFIG.portatype {Signed}
-lappend params_list CONFIG.portawidth {19}
+lappend params_list CONFIG.portawidth {23}
 lappend params_list CONFIG.portbtype {Unsigned}
 lappend params_list CONFIG.portbwidth {11}
 lappend params_list CONFIG.syncclear {true}

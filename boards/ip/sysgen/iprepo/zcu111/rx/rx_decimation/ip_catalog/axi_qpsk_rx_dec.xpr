@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Product Version: Vivado v2018.3 (64-bit)              -->
+<!-- Product Version: Vivado v2018.3.1 (64-bit)              -->
 <!--                                                         -->
-<!-- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.   -->
+<!-- Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="39" Path="Y:/git/rfsoc_qpsk/boards/ip/sysgen/iprepo/zcu111/rx/rx_decimation/ip_catalog/axi_qpsk_rx_dec.xpr">
+<Project Version="7" Minor="39" Path="C:/ISDBS/10k_20/rfsoc_qpsk/boards/ip/sysgen/iprepo/zcu111/rx/rx_decimation/ip_catalog/axi_qpsk_rx_dec.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="b357ee4e0a3a4d00804d7458cc03507d"/>
+    <Option Name="Id" Val="1294f98db89049cb9fc7883839a61825"/>
     <Option Name="Part" Val="xczu28dr-ffvg1517-2-e"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -71,7 +71,7 @@
       <File Path="$PSRCDIR/sources_1/imports/hdl/axi_qpsk_rx_dec_bd_wrapper.vhd">
         <FileInfo>
           <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/bd/axi_qpsk_rx_dec_bd/hdl/axi_qpsk_rx_dec_bd_wrapper.vhd"/>
-          <Attr Name="ImportTime" Val="1554840012"/>
+          <Attr Name="ImportTime" Val="1582196149"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
@@ -88,7 +88,7 @@
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="ImportPath" Val="$PPRDIR/../sysgen/axi_qpsk_rx_dec_mod.vhd"/>
-          <Attr Name="ImportTime" Val="1554839879"/>
+          <Attr Name="ImportTime" Val="1582196125"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
@@ -103,7 +103,7 @@
       <File Path="$PSRCDIR/constrs_1/imports/sysgen/axi_qpsk_rx_dec_clock.xdc">
         <FileInfo>
           <Attr Name="ImportPath" Val="$PPRDIR/../sysgen/axi_qpsk_rx_dec_clock.xdc"/>
-          <Attr Name="ImportTime" Val="1554839768"/>
+          <Attr Name="ImportTime" Val="1582196106"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
         </FileInfo>
@@ -111,7 +111,7 @@
       <File Path="$PSRCDIR/constrs_1/imports/sysgen/axi_qpsk_rx_dec.xdc">
         <FileInfo>
           <Attr Name="ImportPath" Val="$PPRDIR/../sysgen/axi_qpsk_rx_dec.xdc"/>
-          <Attr Name="ImportTime" Val="1554839769"/>
+          <Attr Name="ImportTime" Val="1582196106"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
         </FileInfo>

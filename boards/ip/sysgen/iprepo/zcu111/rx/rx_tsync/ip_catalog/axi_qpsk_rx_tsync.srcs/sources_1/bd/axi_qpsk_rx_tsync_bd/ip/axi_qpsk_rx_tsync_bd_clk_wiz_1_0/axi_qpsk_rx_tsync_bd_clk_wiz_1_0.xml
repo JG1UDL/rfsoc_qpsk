@@ -4400,7 +4400,7 @@
       </xilinx:configElementInfos>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
-      <xilinx:xilinxVersion>2018.3</xilinx:xilinxVersion>
+      <xilinx:xilinxVersion>2018.3.1</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="efefe28e"/>
       <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="44e36c51"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="4f3d3737"/>

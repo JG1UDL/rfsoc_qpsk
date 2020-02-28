@@ -1,8 +1,8 @@
---Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+--Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
---Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
---Date        : Mon Apr  8 15:34:22 2019
---Host        : xcojgoldsmi30 running 64-bit major release  (build 9200)
+--Tool Version: Vivado v.2018.3.1 (win64) Build 2489853 Tue Mar 26 04:20:25 MDT 2019
+--Date        : Thu Feb 13 18:07:16 2020
+--Host        : DESKTOP-UQKFOKL running 64-bit major release  (build 9200)
 --Command     : generate_target qpsk_tx_symbol_gen_bd_wrapper.bd
 --Design      : qpsk_tx_symbol_gen_bd_wrapper
 --Purpose     : IP block netlist
@@ -28,15 +28,15 @@ end qpsk_tx_symbol_gen_bd_wrapper;
 architecture STRUCTURE of qpsk_tx_symbol_gen_bd_wrapper is
   component qpsk_tx_symbol_gen_bd is
   port (
-    CLK_IN1_D_clk_n : in STD_LOGIC;
-    CLK_IN1_D_clk_p : in STD_LOGIC;
     reset_rtl : in STD_LOGIC;
+    m_symbol_axis_x0_tdata : out STD_LOGIC_VECTOR ( 7 downto 0 );
+    m_symbol_axis_x0_tvalid : out STD_LOGIC_VECTOR ( 0 to 0 );
     m_symbol_axis_tdata : out STD_LOGIC_VECTOR ( 7 downto 0 );
     m_symbol_axis_tlast : out STD_LOGIC_VECTOR ( 0 to 0 );
     m_symbol_axis_tvalid : out STD_LOGIC_VECTOR ( 0 to 0 );
     m_symbol_axis_tready : in STD_LOGIC_VECTOR ( 0 to 0 );
-    m_symbol_axis_x0_tdata : out STD_LOGIC_VECTOR ( 7 downto 0 );
-    m_symbol_axis_x0_tvalid : out STD_LOGIC_VECTOR ( 0 to 0 )
+    CLK_IN1_D_clk_n : in STD_LOGIC;
+    CLK_IN1_D_clk_p : in STD_LOGIC
   );
   end component qpsk_tx_symbol_gen_bd;
 begin

@@ -5,13 +5,13 @@ close all;
 
 %% System parameters
 
-Rb = 1000;      % Bit rate is 1kbps (low rate for visualisation purposes)
+Rb = 10000;      % Bit rate is 1kbps (low rate for visualisation purposes)
 Rs = Rb/2;      % QPSK, so 2 bits per symbol
 
 R_RRC = 4;      % Rate change undertaken by RRC filter
 R_HB = 2;       % Rate change undertaken by Halfband filter(s)
 R_CICcomp = 2;  % Rate change undertaken by CIC compensator
-R_CIC = 3200;   % Rate change undertaken by CIC filter
+R_CIC = 320;   % Rate change undertaken by CIC filter
 R_OV = R_RRC * R_HB * R_CICcomp * R_CIC;
 
 R_RFDAC = 8;    % Rate change to be undertaken by RF-DAC (after output)
@@ -101,7 +101,8 @@ CIC_left_shift = log2(R_CIC);
 %--- for variation with 2x CICs doing rate changes of 40 each, +
 % CIC compensation filters (2 each), plus final rate change of 5.  
 % i.e. % 40 * 40 * 2 * 2 * 5 = 64000.
-R_CIC_i = 40;
+%R_CIC_i = 40;
+R_CIC_i = 8;
 CIC_right_shift_i = log2(R_CIC_i^N_CIC);        % use this when using CIC sections
 %---
 

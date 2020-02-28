@@ -14,7 +14,7 @@ namespace eval ::xilinx::dsp::planaheaddriver {
 	set FPGAClockPeriod 39.0625
 	set GenerateTestBench 0
 	set HDLLanguage {vhdl}
-	set IPOOCCacheRootPath {C:/Users/jgoldsmi/AppData/Local/Xilinx/Sysgen/SysgenVivado/win64.o/ip}
+	set IPOOCCacheRootPath {C:/Users/katsu/AppData/Local/Xilinx/Sysgen/SysgenVivado/win64.o/ip}
 	set IP_Auto_Infer {1}
 	set IP_Categories_Text {System Generator for DSP}
 	set IP_Common_Repos {0}
@@ -24,7 +24,7 @@ namespace eval ::xilinx::dsp::planaheaddriver {
 	set IP_LifeCycle_Menu {2}
 	set IP_Logo {sysgen_icon_100.png}
 	set IP_Name {axi_qpsk_rx_coarse_sync}
-	set IP_Revision {185724099}
+	set IP_Revision {213196358}
 	set IP_Socket_IP {0}
 	set IP_Socket_IP_Proj_Path {}
 	set IP_Vendor_Text {UoS}
@@ -66,9 +66,9 @@ namespace eval ::xilinx::dsp::planaheaddriver {
 	set SimulationTime {10000000239.06249809 ns}
 	set SynthStrategyName {Vivado Synthesis Defaults}
 	set SynthesisTool {Vivado}
-	set TargetDir {Y:/git/rfsoc_qpsk/boards/ip/sysgen/iprepo/zcu111/rx/rx_rrc}
+	set TargetDir {C:/ISDBS/10k_23/rfsoc_qpsk/boards/ip/sysgen/iprepo/zcu111/rx/rx_rrc}
 	set TopLevelModule {axi_qpsk_rx_rrc}
-	set TopLevelSimulinkHandle 2.09717
+	set TopLevelSimulinkHandle 2.12964
 	set VHDLLib {xil_defaultlib}
 	set TopLevelPortInterface {}
 	dict set TopLevelPortInterface m_axis_tap_tready Name {m_axis_tap_tready}
@@ -109,7 +109,7 @@ namespace eval ::xilinx::dsp::planaheaddriver {
 	dict set TopLevelPortInterface s_axis_tvalid DatFile {axi_qpsk_rx_rrc_s_axis_tvalid.dat}
 	dict set TopLevelPortInterface s_axis_tvalid IconText {s_axis_tvalid}
 	dict set TopLevelPortInterface s_axis_tvalid Direction in
-	dict set TopLevelPortInterface s_axis_tvalid Period 6400
+	dict set TopLevelPortInterface s_axis_tvalid Period 640
 	dict set TopLevelPortInterface s_axis_tvalid Interface 0
 	dict set TopLevelPortInterface s_axis_tvalid InterfaceName {}
 	dict set TopLevelPortInterface s_axis_tvalid InterfaceString {DATA}
@@ -124,7 +124,7 @@ namespace eval ::xilinx::dsp::planaheaddriver {
 	dict set TopLevelPortInterface s_axis_tdata DatFile {axi_qpsk_rx_rrc_s_axis_tdata.dat}
 	dict set TopLevelPortInterface s_axis_tdata IconText {s_axis_tdata}
 	dict set TopLevelPortInterface s_axis_tdata Direction in
-	dict set TopLevelPortInterface s_axis_tdata Period 6400
+	dict set TopLevelPortInterface s_axis_tdata Period 640
 	dict set TopLevelPortInterface s_axis_tdata Interface 0
 	dict set TopLevelPortInterface s_axis_tdata InterfaceName {}
 	dict set TopLevelPortInterface s_axis_tdata InterfaceString {DATA}
@@ -139,7 +139,7 @@ namespace eval ::xilinx::dsp::planaheaddriver {
 	dict set TopLevelPortInterface m_axis_tdata DatFile {axi_qpsk_rx_rrc_m_axis_coarse_sync_m_axis_tdata.dat}
 	dict set TopLevelPortInterface m_axis_tdata IconText {m_axis_tdata}
 	dict set TopLevelPortInterface m_axis_tdata Direction out
-	dict set TopLevelPortInterface m_axis_tdata Period 1600
+	dict set TopLevelPortInterface m_axis_tdata Period 160
 	dict set TopLevelPortInterface m_axis_tdata Interface 0
 	dict set TopLevelPortInterface m_axis_tdata InterfaceName {}
 	dict set TopLevelPortInterface m_axis_tdata InterfaceString {DATA}
@@ -154,7 +154,7 @@ namespace eval ::xilinx::dsp::planaheaddriver {
 	dict set TopLevelPortInterface m_axis_tvalid DatFile {axi_qpsk_rx_rrc_m_axis_coarse_sync_m_axis_tvalid.dat}
 	dict set TopLevelPortInterface m_axis_tvalid IconText {m_axis_tvalid}
 	dict set TopLevelPortInterface m_axis_tvalid Direction out
-	dict set TopLevelPortInterface m_axis_tvalid Period 1600
+	dict set TopLevelPortInterface m_axis_tvalid Period 160
 	dict set TopLevelPortInterface m_axis_tvalid Interface 0
 	dict set TopLevelPortInterface m_axis_tvalid InterfaceName {}
 	dict set TopLevelPortInterface m_axis_tvalid InterfaceString {DATA}

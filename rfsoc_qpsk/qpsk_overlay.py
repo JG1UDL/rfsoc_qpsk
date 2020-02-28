@@ -216,7 +216,7 @@ class QpskOverlay(Overlay):
                                   layout=ipw.Layout(width='550px', margin='auto')))
                 
         self.timers.register_timers(group_name, list(map(lambda tab: tab['control'], plots)))
-        return QpskOverlay.tab_plots(plots)
+        QpskOverlay.tab_plots(plots)
         
     @staticmethod
     def tab_plots(tabs):
@@ -241,12 +241,11 @@ class QpskOverlay(Overlay):
         
         QpskOverlay._tab_load_resizer_callback(tab_widget)
 
-        return tab_widget
-
     @staticmethod
     def _tab_load_resizer_callback(tabs):
         """Helper function to handle relative widths for plots in hidden tabs"""
-        
+        display(tabs)
+
         out = ipw.Output()
         display(out)
 

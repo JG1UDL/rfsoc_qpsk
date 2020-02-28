@@ -170,7 +170,7 @@ lappend params_list CONFIG.S_CONFIG_Method {Single}
 lappend params_list CONFIG.S_CONFIG_Sync_Mode {On_Vector}
 lappend params_list CONFIG.S_DATA_Has_FIFO {false}
 lappend params_list CONFIG.S_DATA_Has_TUSER {Not_Required}
-lappend params_list CONFIG.SamplePeriod {6400}
+lappend params_list CONFIG.SamplePeriod {640}
 lappend params_list CONFIG.Sample_Frequency {0.001}
 lappend params_list CONFIG.Select_Pattern {All}
 lappend params_list CONFIG.Stopband_Max {1.00000000}
@@ -247,7 +247,7 @@ lappend params_list CONFIG.S_CONFIG_Method {Single}
 lappend params_list CONFIG.S_CONFIG_Sync_Mode {On_Vector}
 lappend params_list CONFIG.S_DATA_Has_FIFO {false}
 lappend params_list CONFIG.S_DATA_Has_TUSER {Not_Required}
-lappend params_list CONFIG.SamplePeriod {6400}
+lappend params_list CONFIG.SamplePeriod {640}
 lappend params_list CONFIG.Sample_Frequency {0.001}
 lappend params_list CONFIG.Select_Pattern {All}
 lappend params_list CONFIG.Stopband_Max {1.00000000}
@@ -324,7 +324,7 @@ lappend params_list CONFIG.S_CONFIG_Method {Single}
 lappend params_list CONFIG.S_CONFIG_Sync_Mode {On_Vector}
 lappend params_list CONFIG.S_DATA_Has_FIFO {false}
 lappend params_list CONFIG.S_DATA_Has_TUSER {Not_Required}
-lappend params_list CONFIG.SamplePeriod {3200}
+lappend params_list CONFIG.SamplePeriod {320}
 lappend params_list CONFIG.Sample_Frequency {0.001}
 lappend params_list CONFIG.Select_Pattern {All}
 lappend params_list CONFIG.Stopband_Max {1.00000000}
